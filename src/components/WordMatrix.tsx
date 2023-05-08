@@ -1,24 +1,26 @@
 import * as classnames from 'classnames';
 
-export default function WordMatrix({ word, answer }: any) {
+interface WordMatrixProps {
+  word: string[];
+  answer: string;
+}
+
+export default function WordMatrix({ word, answer }: WordMatrixProps) {
+
   return (
     <div className="flex gap-2 justify-center my-2">
-      {word.map((letter: any, index: any) => {
-        const isCorrectLetterAndPosition = letter === answer[index];
+      {word.map((letter: string, index: number) => {
+        const isCorrectLetterAndPosition = letter == answer[index];
         const isCorrectLetterWrongPosition =
-          !isCorrectLetterAndPosition && answer.includes(letter);
+          !isCorrectLetterAndPosition && answer.includes(letter) && letter !== '';
         const isWrongLetter = !isCorrectLetterAndPosition && !isCorrectLetterWrongPosition;
 
         const backgroundColorClass = classnames({
           'bg-green-500': isCorrectLetterAndPosition,
-          'bg-yellow-400': isCorrectLetterWrongPosition,
+          'bg-yellow-300': isCorrectLetterWrongPosition,
+          'bg-slate-50': isWrongLetter || letter === '' || !letter,
         });
-        const noBackgroundColorClass = classnames({
-          'bg-slate-50': isWrongLetter,
-        });
-        const noLetter = classnames({
-          'bg-slate-50': !letter,
-        })
+        
         
         return (
           <div
@@ -27,7 +29,7 @@ export default function WordMatrix({ word, answer }: any) {
               'flex',
               'justify-center',
               'items-center',
-              'text-4xl',
+              'text-4xl', 
               'font-normal',
               'p-0',
               'border',
@@ -35,8 +37,6 @@ export default function WordMatrix({ word, answer }: any) {
               'w-16',
               'h-16',
               backgroundColorClass,
-              noBackgroundColorClass,
-              noLetter,
             )}
           >
             {letter.toUpperCase()}

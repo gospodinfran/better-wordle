@@ -1,6 +1,11 @@
 import WordMatrix from "./WordMatrix"
 
-export default function WordMapper({ words, answer}: any) {
+export interface WordMapperProps {
+    words: string[][];
+    answer: string;
+}
+
+export default function WordMapper({ words, answer}: WordMapperProps) {
 
     return (<>
         { words.map((word: string[], index: number) => {

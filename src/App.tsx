@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react"
-import Header from "./components/Header"
-import InputForm from "./components/InputForm"
-import WordMapper from "./components/WordMapper"
+import { useEffect, useState } from "react";
+import Header from "./components/Header";
+import InputForm from "./components/InputForm";
+import WordMapper from "./components/WordMapper";
 
 function App() {
   const [correctWord, setCorrectWord] = useState('')
@@ -11,15 +11,15 @@ function App() {
   const [userForm, setUserForm] = useState('')
 
   useEffect(() => {
-    const url = `https://api.datamuse.com/words?sp=?????&max=10000`;
+    const url = `https://api.datamuse.com/words?sp=?????&max=1000`;
     fetch(url)
       .then(response => response.json())
       .then(data => {
-        let x = Math.ceil(Math.random() * 1000)
-        const randomWord = data[x].word
-        setCorrectWord(JSON.stringify(randomWord))
-      })
-  }, [])
+        let x = Math.ceil(Math.random() * 1000);
+        const randomWord = data[x].word;
+        setCorrectWord(randomWord);
+      });
+  }, []);
 
   function handleInputChange(e: any) {
     const regex: RegExp = /^[a-zA-Z]+$/
@@ -56,6 +56,7 @@ function App() {
       <WordMapper words={words} answer={correctWord} />
       <InputForm value={userForm} onChange={handleInputChange} onSubmit={handleFormSubmit} />
       { index == 6 && <p>the correct word was: {correctWord}!</p> }
+      { correctWord }
     </>
   )
 }
