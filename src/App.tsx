@@ -4,7 +4,7 @@ import InputForm from "./components/InputForm";
 import WordMatrix from "./components/WordMatrix";
 
 function App() {
-  const [correctWord, setCorrectWord] = useState('')
+  const [_correctWord, setCorrectWord] = useState('')
   const [words, setWords] = useState([['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], 
   ['', '', '', '', ''], ['', '', '', '', '']])
   const [index, setIndex] = useState(0)
