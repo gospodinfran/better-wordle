@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import InputForm from "./components/InputForm";
+import VictoryMenu from "./components/VictoryMenu";
 import WordMapper from "./components/WordMapper";
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
   ['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', '']])
   const [index, setIndex] = useState(0)
   const [userForm, setUserForm] = useState('')
+  let [completed, setCompleted] = useState(false)
 
   useEffect(() => {
     const url = `https://api.datamuse.com/words?sp=?????&max=1000`;
@@ -53,10 +55,10 @@ function App() {
   return (
     <>
       <Header />
-      <WordMapper words={words} answer={correctWord} />
+      <WordMapper words={words} answer={correctWord} setCompleted={setCompleted} />
       <InputForm value={userForm} onChange={handleInputChange} onSubmit={handleFormSubmit} />
       { index == 6 && <p>the correct word was: {correctWord}!</p> }
-      { correctWord }
+      <VictoryMenu completed={completed} />
     </>
   )
 }
