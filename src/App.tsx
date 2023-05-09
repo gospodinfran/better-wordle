@@ -13,14 +13,14 @@ function App() {
   let [completed, setCompleted] = useState(false)
 
   useEffect(() => {
-    const url = `https://api.datamuse.com/words?sp=?????&max=1000`;
-    fetch(url)
+    fetch('https://fran-api-bundle.herokuapp.com/wordle')
       .then(response => response.json())
       .then(data => {
-        let x = Math.ceil(Math.random() * 1000);
-        const randomWord = data[x].word;
-        setCorrectWord(randomWord);
-      });
+        // 687 words in JSON
+        const x = Math.ceil(Math.random() * 687) 
+        setCorrectWord(data.wordleWords[x]);
+      })
+      .catch(err => console.log('Error fetching data: ', err));
   }, []);
 
   function handleInputChange(e: any) {
