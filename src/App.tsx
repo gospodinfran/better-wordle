@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import InputForm from "./components/InputForm";
 import Keyboard from "./components/Keyboard";
+import LostMenu from "./components/LostMenu";
 import VictoryMenu from "./components/VictoryMenu";
 import WordMapper from "./components/WordMapper";
 
@@ -58,8 +59,8 @@ function App() {
       <Header />
       <WordMapper words={words} answer={correctWord} setCompleted={setCompleted} />
       <InputForm value={userForm} onChange={handleInputChange} onSubmit={handleFormSubmit} />
-      { index == 6 && <p>the correct word was: {correctWord}!</p> }
       <VictoryMenu completed={completed} />
+      <LostMenu show={index == 6 && !completed} word={correctWord} />
       <Keyboard answer={correctWord} words={words} />
     </>
   )
