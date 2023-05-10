@@ -1,4 +1,5 @@
-import WordMatrix from "./WordMatrix"
+import WordMatrix from "./WordMatrix";
+
 
 export interface WordMapperProps {
     words: string[][];

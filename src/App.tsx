@@ -11,7 +11,6 @@ function App() {
   ['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', '']])
   const [index, setIndex] = useState(0)
   const [userForm, setUserForm] = useState('')
-  const [attempts, setAttempts] = useState<Set<string>>(new Set())
   const [completed, setCompleted] = useState(false)
 
   useEffect(() => {
@@ -43,8 +42,6 @@ function App() {
     if (index < 6) {
       if (userForm.length === 5) {
         const word = userForm.toUpperCase().split('')
-        setAttempts(prevAttempts => new Set([...prevAttempts, ...word]))
-        console.log(attempts)
       setWords((prevWords) => [
         ...prevWords.slice(0, index),
         word,
@@ -63,7 +60,7 @@ function App() {
       <InputForm value={userForm} onChange={handleInputChange} onSubmit={handleFormSubmit} />
       { index == 6 && <p>the correct word was: {correctWord}!</p> }
       <VictoryMenu completed={completed} />
-      <Keyboard attempts={attempts} answer={correctWord} />
+      <Keyboard answer={correctWord} words={words} />
     </>
   )
 }
