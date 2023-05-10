@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import InputForm from "./components/InputForm";
+import Keyboard from "./components/Keyboard";
 import VictoryMenu from "./components/VictoryMenu";
 import WordMapper from "./components/WordMapper";
 
@@ -10,7 +11,8 @@ function App() {
   ['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', '']])
   const [index, setIndex] = useState(0)
   const [userForm, setUserForm] = useState('')
-  let [completed, setCompleted] = useState(false)
+  const [attempts, setAttempts] = useState<Set<string>>(new Set())
+  const [completed, setCompleted] = useState(false)
 
   useEffect(() => {
     fetch('https://fran-api-bundle.herokuapp.com/wordle')
@@ -40,7 +42,9 @@ function App() {
     e.preventDefault()
     if (index < 6) {
       if (userForm.length === 5) {
-        const word = userForm.split('')
+        const word = userForm.toUpperCase().split('')
+        setAttempts(prevAttempts => new Set([...prevAttempts, ...word]))
+        console.log(attempts)
       setWords((prevWords) => [
         ...prevWords.slice(0, index),
         word,
@@ -59,6 +63,7 @@ function App() {
       <InputForm value={userForm} onChange={handleInputChange} onSubmit={handleFormSubmit} />
       { index == 6 && <p>the correct word was: {correctWord}!</p> }
       <VictoryMenu completed={completed} />
+      <Keyboard attempts={attempts} answer={correctWord} />
     </>
   )
 }
