@@ -8,13 +8,19 @@ import WordMapper from "./components/WordMapper";
 
 function App() {
   const [correctWord, setCorrectWord] = useState('')
-  const [words, setWords] = useState([['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], 
+  const [words, setWords] = useState<string[][]>(() => 
+  localStorage.getItem('words') ? JSON.parse(localStorage.getItem('words')!) : [['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], 
   ['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', '']])
   const [index, setIndex] = useState(0)
   const [userForm, setUserForm] = useState('')
   const [completed, setCompleted] = useState(false)
 
   useEffect(() => {
+    if (localStorage.getItem('lastPlayDate') !== new Date().toLocaleDateString()) {
+      setWords([['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], 
+      ['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', '']])
+    }
+
     fetch('https://fran-api-bundle.herokuapp.com/wordle')
       .then(response => response.json())
       .then(data => {
@@ -24,6 +30,19 @@ function App() {
       })
       .catch(err => console.log('Error fetching data: ', err));
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('words', JSON.stringify(words))
+
+    let populatedWords = 0
+    for (let i = 0; i < 6; i++) {
+      if (words[i][0] == '') {
+        break
+      }
+      populatedWords++
+    }
+    setIndex(populatedWords)
+  }, [words])
 
   function handleInputChange(e: any) {
     const regex: RegExp = /^[a-zA-Z]+$/
@@ -40,6 +59,9 @@ function App() {
 
   function handleFormSubmit(e: React.ChangeEvent) {
     e.preventDefault()
+
+    localStorage.setItem('lastPlayDate', new Date().toLocaleDateString())
+
     if (index < 6) {
       if (userForm.length === 5) {
         const word = userForm.toUpperCase().split('')
