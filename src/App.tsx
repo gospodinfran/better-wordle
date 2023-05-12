@@ -19,7 +19,7 @@ function App() {
       .then(response => response.json())
       .then(data => {
         // 687 words in JSON
-        const x = Math.ceil(Math.random() * 687) 
+        const x = Math.ceil(Math.random() * 687)
         setCorrectWord(data.wordleWords[x]);
       })
       .catch(err => console.log('Error fetching data: ', err));
