@@ -1,3 +1,3 @@
 # Wordle Battle Royale
 Wordle but for competitive people.
-Check out the [demo](www.frankezic.com)
+Check out the [demo](https://www.frankezic.com)
