@@ -6,7 +6,7 @@ export default function BasicSettings({ children }: { children: any}) {
   return (
     <Menu>
       <Menu.Button>{children}</Menu.Button>
-      <Menu.Items className="absolute right-0 mt-12 w-40 mr-[27px] origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+      <Menu.Items className="absolute right-0 mt-12 w-44 mr-[27px] origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
         <div className='px-1 py-1'>
         <Menu.Item onClick={() => console.log("clicked")}>
           {({ active }) => (
@@ -26,7 +26,7 @@ export default function BasicSettings({ children }: { children: any}) {
               </svg>
               
             )}
-            Dark Mode
+            Dark Mode (soon)
           </button>
           )}
         </Menu.Item>
