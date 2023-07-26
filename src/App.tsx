@@ -96,7 +96,7 @@ function App() {
       <InputForm value={userForm} onChange={handleInputChange} onSubmit={handleFormSubmit} />
       <VictoryMenu completed={completed} />
       <LostMenu show={index == 6 && !completed} word={correctWord} />
-      <Keyboard answer={correctWord} words={words} />
+      <Keyboard answer={correctWord} words={words} setUserForm={setUserForm} />
     </>
   )
 }
