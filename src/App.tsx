@@ -57,21 +57,34 @@ function App() {
     } 
   }
 
-  function handleFormSubmit(e: React.ChangeEvent) {
+  async function handleFormSubmit(e: React.ChangeEvent) {
     e.preventDefault()
 
     localStorage.setItem('lastPlayDate', new Date().toLocaleDateString())
 
+
     if (index < 6) {
       if (userForm.length === 5) {
         const word = userForm.toUpperCase().split('')
-      setWords((prevWords) => [
-        ...prevWords.slice(0, index),
-        word,
-        ...prevWords.slice(index + 1),
-      ])
-      setIndex(prev => prev + 1)
-      setUserForm('')
+        const word_as_string = word.join("").toLowerCase()
+
+        try {
+          console.log(word_as_string)
+          const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word_as_string}`)
+          const data = await response.json()
+          if (data[0].word) {
+            setWords((prevWords) => [
+              ...prevWords.slice(0, index),
+              word,
+              ...prevWords.slice(index + 1),
+            ])
+            setIndex(prev => prev + 1)
+            setUserForm('')
+          }
+
+        } catch (e) {
+          console.log(`Error: ${e}`)
+        }
       }
     }
   }
