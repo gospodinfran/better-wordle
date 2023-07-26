@@ -1,3 +1,3 @@
-# Wordle Battle Royale
-Wordle but for competitive people.
-Check out the [demo](https://www.frankezic.com)
+# Better Wordle
+Wordle but better than the NY Times version.
+[Live here](https://www.frankezic.com)
