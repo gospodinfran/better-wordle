@@ -1,11 +1,12 @@
 
 interface WordMatrixProps {
+  darkTheme: boolean;
   word: string[];
   answer: string;
   setCompleted: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function WordMatrix({ word, answer, setCompleted }: WordMatrixProps) {
+export default function WordMatrix({ darkTheme, word, answer, setCompleted }: WordMatrixProps) {
   let score = 0
 
   return (
@@ -28,11 +29,16 @@ export default function WordMatrix({ word, answer, setCompleted }: WordMatrixPro
         })*/}
 
         const backgroundColorClass = 
-        `flex justify-center items-center text-4xl font-normal p-0 border shadow w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 
+        `flex justify-center items-center text-4xl font-normal p-0 border shadow w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 ${darkTheme ? 'text-white' : ''} 
         ${isCorrectLetterAndPosition ? 'bg-green-600 ' : ''}
         ${isCorrectLetterWrongPosition ? 'bg-yellow-400 ' : ''}
-        ${isWrongLetter ? 'bg-gray-200' : ''} 
-        ${letter === '' || !letter ? 'bg-slate-50' : ''}`;
+        ${isWrongLetter && darkTheme ? 'bg-[#303030]' : 
+        isWrongLetter && !darkTheme ? 'bg-gray-300' : ''
+        } 
+        ${
+          (letter === '' || !letter) && darkTheme ? 'bg-[#1b1a1a]' : 
+          (letter === '' || !letter) && !darkTheme ? 'bg-slate-50' : ''
+        }`
         
         return (
           <div

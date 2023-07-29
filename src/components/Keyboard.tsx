@@ -1,4 +1,4 @@
-export default function Keyboard({ answer, words, setUserForm}: 
+export default function Keyboard({answer, words, setUserForm}: 
     {answer: string, words: string[][], setUserForm: React.Dispatch<React.SetStateAction<string>>}) {
     // First row of the QWERTY keyboard
     const firstRow: string[] = [
@@ -59,7 +59,7 @@ export default function Keyboard({ answer, words, setUserForm}:
       key={index}
       onClick={() => onButtonClick(letter)}
       className={`
-      flex justify-center items-center font-normal p-0 border border-slate-300 w-[8vw] h-[8vw] md:w-14 md:h-14 lg:w-16 lg:h-16 hover:cursor-pointer 
+      flex justify-center items-center font-medium md:text-xl border-2 rounded-lg border-gray-300 p-0 w-[8vw] h-[8vw] md:w-14 md:h-14 lg:w-16 lg:h-16 hover:cursor-pointer 
       ${
         color === 'green' ? 'bg-green-600' :
         color === 'yellow' ? 'bg-yellow-400' :
@@ -79,7 +79,7 @@ export default function Keyboard({ answer, words, setUserForm}:
     <div
       key={index}
       onClick={() => onButtonClick(letter)}
-      className={`flex justify-center items-center font-normal p-0 border border-slate-300 w-[8vw] h-[8vw] md:w-14 md:h-14 lg:w-16 lg:h-16 hover:cursor-pointer ${
+      className={`flex justify-center items-center font-medium md:text-xl border-2 rounded-lg border-gray-300 p-0 w-[8vw] h-[8vw] md:w-14 md:h-14 lg:w-16 lg:h-16 hover:cursor-pointer ${
         color === 'green' ? 'bg-green-600' :
         color === 'yellow' ? 'bg-yellow-400' :
         color === 'slate' ? 'bg-gray-300' : 'bg-white'}`}
@@ -98,7 +98,7 @@ export default function Keyboard({ answer, words, setUserForm}:
     <div
       key={index}
       onClick={() => onButtonClick(letter)}
-      className={`flex justify-center items-center font-normal p-0 border border-slate-300 w-[8vw] h-[8vw] md:w-14 md:h-14 lg:w-16 lg:h-16 hover:cursor-pointer ${
+      className={`flex justify-center items-center font-medium md:text-xl border-2 rounded-lg border-gray-300 p-0 w-[8vw] h-[8vw] md:w-14 md:h-14 lg:w-16 lg:h-16 hover:cursor-pointer ${
         color === 'green' ? 'bg-green-600' :
         color === 'yellow' ? 'bg-yellow-400' :
         color === 'slate' ? 'bg-gray-300' : 'bg-white'}`}
