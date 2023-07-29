@@ -49,7 +49,7 @@ export default function Keyboard({ answer, words, setUserForm}:
       
 
     return (
-        <div className="flex justify-center">
+        <div className="flex justify-center md:mt-6 lg:mt-8 xl:mt-12">
             <div className="flex flex-col gap-2 justify-center my-2">
             <div className="flex justify-center gap-2">
             {firstRow.map((letter, index) => {
@@ -59,7 +59,7 @@ export default function Keyboard({ answer, words, setUserForm}:
       key={index}
       onClick={() => onButtonClick(letter)}
       className={`
-      flex justify-center items-center font-normal p-0 border border-slate-300 w-12 h-12 hover:cursor-pointer 
+      flex justify-center items-center font-normal p-0 border border-slate-300 w-10 h-10 md:w-12 md:h-12 hover:cursor-pointer 
       ${
         color === 'green' ? 'bg-green-500' :
         color === 'yellow' ? 'bg-yellow-300' :
@@ -79,7 +79,7 @@ export default function Keyboard({ answer, words, setUserForm}:
     <div
       key={index}
       onClick={() => onButtonClick(letter)}
-      className={`flex justify-center items-center font-normal p-0 border border-slate-300 w-12 h-12 hover:cursor-pointer ${
+      className={`flex justify-center items-center font-normal p-0 border border-slate-300 w-10 h-10 md:w-12 md:h-12 hover:cursor-pointer ${
         color === 'green' ? 'bg-green-500' :
         color === 'yellow' ? 'bg-yellow-300' :
         color === 'slate' ? 'bg-slate-300' : 'bg-white'}`}
@@ -98,7 +98,7 @@ export default function Keyboard({ answer, words, setUserForm}:
     <div
       key={index}
       onClick={() => onButtonClick(letter)}
-      className={`flex justify-center items-center font-normal p-0 border border-slate-300 w-12 h-12 hover:cursor-pointer ${
+      className={`flex justify-center items-center font-normal p-0 border border-slate-300 w-10 h-10 md:w-12 md:h-12 hover:cursor-pointer ${
         color === 'green' ? 'bg-green-500' :
         color === 'yellow' ? 'bg-yellow-300' :
         color === 'slate' ? 'bg-slate-300' : 'bg-white'}`}

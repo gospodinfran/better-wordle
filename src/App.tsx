@@ -7,6 +7,7 @@ import VictoryMenu from "./components/VictoryMenu";
 import WordMapper from "./components/WordMapper";
 
 function App() {
+  const [darkTheme, setDarkTheme] = useState(false)
   const [correctWord, setCorrectWord] = useState('')
   const [words, setWords] = useState<string[][]>(() => 
   localStorage.getItem('words') ? JSON.parse(localStorage.getItem('words')!) : [['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], 
@@ -90,14 +91,14 @@ function App() {
   }
 
   return (
-    <>
-      <Header />
+    <div className={`${darkTheme ? 'bg-black' : ''} h-screen w-screen`}>
+      <Header darkTheme={darkTheme} setDarkTheme={setDarkTheme}/>
       <WordMapper words={words} answer={correctWord} setCompleted={setCompleted} />
       <InputForm value={userForm} onChange={handleInputChange} onSubmit={handleFormSubmit} />
       <VictoryMenu completed={completed} />
       <LostMenu show={index == 6 && !completed} word={correctWord} />
       <Keyboard answer={correctWord} words={words} setUserForm={setUserForm} />
-    </>
+    </div>
   )
 }
 
