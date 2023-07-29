@@ -29,9 +29,9 @@ export default function WordMatrix({ darkTheme, word, answer, setCompleted }: Wo
         })*/}
 
         const backgroundColorClass = 
-        `flex justify-center items-center text-4xl font-normal p-0 border shadow w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 ${darkTheme ? 'text-white' : ''} 
+        `flex justify-center items-center text-4xl lg:text-5xl font-normal p-0 w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 ${darkTheme ? 'text-white' : 'border shadow'} 
         ${isCorrectLetterAndPosition ? 'bg-green-600 ' : ''}
-        ${isCorrectLetterWrongPosition ? 'bg-yellow-400 ' : ''}
+        ${isCorrectLetterWrongPosition ? 'bg-yellow-500 ' : ''}
         ${isWrongLetter && darkTheme ? 'bg-[#303030]' : 
         isWrongLetter && !darkTheme ? 'bg-gray-300' : ''
         } 
