@@ -59,11 +59,11 @@ export default function Keyboard({ answer, words, setUserForm}:
       key={index}
       onClick={() => onButtonClick(letter)}
       className={`
-      flex justify-center items-center font-normal p-0 border border-slate-300 w-10 h-10 md:w-12 md:h-12 hover:cursor-pointer 
+      flex justify-center items-center font-normal p-0 border border-slate-300 w-8 h-8 md:w-12 md:h-12 lg:w-16 lg:h-16 hover:cursor-pointer 
       ${
-        color === 'green' ? 'bg-green-500' :
-        color === 'yellow' ? 'bg-yellow-300' :
-        color === 'slate' ? 'bg-slate-300' : 'bg-white'}`}
+        color === 'green' ? 'bg-green-600' :
+        color === 'yellow' ? 'bg-yellow-400' :
+        color === 'slate' ? 'bg-gray-300' : 'bg-white'}`}
     >
       {letter.toUpperCase()}
     </div>
@@ -79,10 +79,10 @@ export default function Keyboard({ answer, words, setUserForm}:
     <div
       key={index}
       onClick={() => onButtonClick(letter)}
-      className={`flex justify-center items-center font-normal p-0 border border-slate-300 w-10 h-10 md:w-12 md:h-12 hover:cursor-pointer ${
-        color === 'green' ? 'bg-green-500' :
-        color === 'yellow' ? 'bg-yellow-300' :
-        color === 'slate' ? 'bg-slate-300' : 'bg-white'}`}
+      className={`flex justify-center items-center font-normal p-0 border border-slate-300 w-8 h-8 md:w-12 md:h-12 lg:w-16 lg:h-16 hover:cursor-pointer ${
+        color === 'green' ? 'bg-green-600' :
+        color === 'yellow' ? 'bg-yellow-400' :
+        color === 'slate' ? 'bg-gray-300' : 'bg-white'}`}
     >
       {letter.toUpperCase()}
     </div>
@@ -98,10 +98,10 @@ export default function Keyboard({ answer, words, setUserForm}:
     <div
       key={index}
       onClick={() => onButtonClick(letter)}
-      className={`flex justify-center items-center font-normal p-0 border border-slate-300 w-10 h-10 md:w-12 md:h-12 hover:cursor-pointer ${
-        color === 'green' ? 'bg-green-500' :
-        color === 'yellow' ? 'bg-yellow-300' :
-        color === 'slate' ? 'bg-slate-300' : 'bg-white'}`}
+      className={`flex justify-center items-center font-normal p-0 border border-slate-300 w-8 h-8 md:w-12 md:h-12 lg:w-16 lg:h-16 hover:cursor-pointer ${
+        color === 'green' ? 'bg-green-600' :
+        color === 'yellow' ? 'bg-yellow-400' :
+        color === 'slate' ? 'bg-gray-300' : 'bg-white'}`}
     >
       {letter.toUpperCase()}
     </div>

@@ -29,8 +29,8 @@ export default function WordMatrix({ word, answer, setCompleted }: WordMatrixPro
 
         const backgroundColorClass = 
         `flex justify-center items-center text-4xl font-normal p-0 border shadow w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 
-        ${isCorrectLetterAndPosition ? 'bg-green-500 ' : ''}
-        ${isCorrectLetterWrongPosition ? 'bg-yellow-300 ' : ''}
+        ${isCorrectLetterAndPosition ? 'bg-green-600 ' : ''}
+        ${isCorrectLetterWrongPosition ? 'bg-yellow-400 ' : ''}
         ${isWrongLetter ? 'bg-gray-200' : ''} 
         ${letter === '' || !letter ? 'bg-slate-50' : ''}`;
         
