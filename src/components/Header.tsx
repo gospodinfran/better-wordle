@@ -9,7 +9,10 @@ export default function Header({ darkTheme, setDarkTheme }: { darkTheme: boolean
 
         <MenuIcon fontSize='inherit' className='hover:cursor-pointer ml-2
          hover:bg-gray-700 p-1 rounded-lg' />
-        <h1 className={`font-mono text-3xl md:text-4xl font-thin`}>(better) Wordle</h1>
+        <h1 className='font-mono text-3xl md:text-4xl font-light'>
+            <span className='text-xl md:text-2xl'>(better) </span>
+            Wordle
+        </h1>
         <div className='mr-3'>
             <BasicSettings setTheme={setDarkTheme}>
             <SettingsIcon fontSize='inherit' className='hover:cursor-pointer mr-2 
