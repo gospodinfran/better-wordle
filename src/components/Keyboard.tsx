@@ -49,7 +49,7 @@ export default function Keyboard({ answer, words, setUserForm}:
       
 
     return (
-        <div className="flex justify-center md:mt-6 lg:mt-8 xl:mt-12">
+        <div className="flex justify-center mt-4 md:mt-6 lg:mt-8 xl:mt-12">
             <div className="flex flex-col gap-2 justify-center my-2">
             <div className="flex justify-center gap-2">
             {firstRow.map((letter, index) => {
@@ -59,7 +59,7 @@ export default function Keyboard({ answer, words, setUserForm}:
       key={index}
       onClick={() => onButtonClick(letter)}
       className={`
-      flex justify-center items-center font-normal p-0 border border-slate-300 w-8 h-8 md:w-12 md:h-12 lg:w-16 lg:h-16 hover:cursor-pointer 
+      flex justify-center items-center font-normal p-0 border border-slate-300 w-[8vw] h-[8vw] md:w-14 md:h-14 lg:w-16 lg:h-16 hover:cursor-pointer 
       ${
         color === 'green' ? 'bg-green-600' :
         color === 'yellow' ? 'bg-yellow-400' :
@@ -79,7 +79,7 @@ export default function Keyboard({ answer, words, setUserForm}:
     <div
       key={index}
       onClick={() => onButtonClick(letter)}
-      className={`flex justify-center items-center font-normal p-0 border border-slate-300 w-8 h-8 md:w-12 md:h-12 lg:w-16 lg:h-16 hover:cursor-pointer ${
+      className={`flex justify-center items-center font-normal p-0 border border-slate-300 w-[8vw] h-[8vw] md:w-14 md:h-14 lg:w-16 lg:h-16 hover:cursor-pointer ${
         color === 'green' ? 'bg-green-600' :
         color === 'yellow' ? 'bg-yellow-400' :
         color === 'slate' ? 'bg-gray-300' : 'bg-white'}`}
@@ -98,7 +98,7 @@ export default function Keyboard({ answer, words, setUserForm}:
     <div
       key={index}
       onClick={() => onButtonClick(letter)}
-      className={`flex justify-center items-center font-normal p-0 border border-slate-300 w-8 h-8 md:w-12 md:h-12 lg:w-16 lg:h-16 hover:cursor-pointer ${
+      className={`flex justify-center items-center font-normal p-0 border border-slate-300 w-[8vw] h-[8vw] md:w-14 md:h-14 lg:w-16 lg:h-16 hover:cursor-pointer ${
         color === 'green' ? 'bg-green-600' :
         color === 'yellow' ? 'bg-yellow-400' :
         color === 'slate' ? 'bg-gray-300' : 'bg-white'}`}
