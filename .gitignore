@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Other. Can experiment to see what I can/can't remove due to deploying via GitHub
+.gitignore
+TODO.md
