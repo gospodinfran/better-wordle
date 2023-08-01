@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
-import InputForm from "./components/InputForm";
 import Keyboard from "./components/Keyboard";
 import LostMenu from "./components/LostMenu";
 import VictoryMenu from "./components/VictoryMenu";
 import WordMapper from "./components/WordMapper";
+import Underscores from "./components/Underscores";
 
 function App() {
-  const [darkTheme, setDarkTheme] = useState(true)
+  const [darkTheme, setDarkTheme] = useState(false)
   const [correctWord, setCorrectWord] = useState('')
   const [words, setWords] = useState<string[][]>(() => 
   localStorage.getItem('words') ? JSON.parse(localStorage.getItem('words')!) : [['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], 
   ['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', '']])
   const [index, setIndex] = useState(0)
-  const [userForm, setUserForm] = useState('')
+  //const [userForm, setUserForm] = useState('')
+  const [hangmanForm, setHangmanForm] = useState(['', '', '', '', ''])
   const [completed, setCompleted] = useState(false)
 
   useEffect(() => {
@@ -45,7 +46,7 @@ function App() {
     setIndex(populatedWords)
   }, [words])
 
-  function handleInputChange(e: any) {
+  {/*function handleInputChange(e: any) {
     const regex: RegExp = /^[a-zA-Z]+$/
     const inputValue = e.target.value
 
@@ -84,20 +85,20 @@ function App() {
           }
 
         } catch (e) {
-          console.log(`Error: ${e}`)
+          console.log('Error: ', e)
         }
       }
     }
-  }
+  }*/}
 
   return (
     <div className={`${darkTheme ? 'bg-[#171717]' : ''} h-screen w-screen`}>
       <Header darkTheme={darkTheme} setDarkTheme={setDarkTheme}/>
       <WordMapper darkTheme={darkTheme} words={words} answer={correctWord} setCompleted={setCompleted} />
-      <InputForm value={userForm} onChange={handleInputChange} onSubmit={handleFormSubmit} />
+      <Underscores darkTheme={darkTheme} userForm={hangmanForm} />
       <VictoryMenu completed={completed} />
       <LostMenu show={index == 6 && !completed} word={correctWord} />
-      <Keyboard darkTheme={darkTheme} answer={correctWord} words={words} setUserForm={setUserForm} />
+      <Keyboard darkTheme={darkTheme} answer={correctWord} words={words} hangmanForm={hangmanForm} setHangman={setHangmanForm} />
     </div>
   )
 }

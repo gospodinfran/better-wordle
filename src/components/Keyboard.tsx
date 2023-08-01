@@ -1,5 +1,5 @@
-export default function Keyboard({darkTheme, answer, words, setUserForm}: 
-    {darkTheme: boolean, answer: string, words: string[][], setUserForm: React.Dispatch<React.SetStateAction<string>>}) {
+export default function Keyboard({darkTheme, answer, words, hangmanForm, setHangman}: 
+    {darkTheme: boolean, answer: string, words: string[][], hangmanForm: string[], setHangman: React.Dispatch<React.SetStateAction<string[]>>}) {
     // First row of the QWERTY keyboard
     const firstRow: string[] = [
         "q", "w", "e", "r", "t", "y", "u", "i", "o", "p"
@@ -37,14 +37,13 @@ export default function Keyboard({darkTheme, answer, words, setUserForm}:
       }
 
     function onButtonClick(letter: string) {
-      setUserForm(prev => {
-        if (prev.length < 5) 
-        {
-          return prev.concat(letter)
-        } else {
-          return prev
-        }
-      })
+      if (hangmanForm.includes('')) {
+        const emptyIndex = hangmanForm.findIndex(ele => ele === '')
+        const cpy = [...hangmanForm]
+        cpy[emptyIndex] = letter
+        setHangman(cpy)
+      }
+
     }
       
 
@@ -59,7 +58,7 @@ export default function Keyboard({darkTheme, answer, words, setUserForm}:
       key={index}
       onClick={() => onButtonClick(letter)}
       className={`
-      flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[8vw] h-[8vw] md:w-14 md:h-14 lg:w-16 lg:h-16 hover:cursor-pointer 
+      flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[8vw] h-[8vw] md:w-14 md:h-14 lg:w-16 lg:h-16 hover:cursor-pointer select-none 
       ${
         color === 'green' ? 'bg-green-600' :
         color === 'yellow' ? 'bg-yellow-400' :
@@ -79,7 +78,7 @@ export default function Keyboard({darkTheme, answer, words, setUserForm}:
     <div
       key={index}
       onClick={() => onButtonClick(letter)}
-      className={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[8vw] h-[8vw] md:w-14 md:h-14 lg:w-16 lg:h-16 hover:cursor-pointer ${
+      className={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[8vw] h-[8vw] md:w-14 md:h-14 lg:w-16 lg:h-16 hover:cursor-pointer select-none ${
         color === 'green' ? 'bg-green-600' :
         color === 'yellow' ? 'bg-yellow-400' :
         color === 'slate' ? 'bg-gray-300' : 'bg-white'}`}
@@ -98,7 +97,7 @@ export default function Keyboard({darkTheme, answer, words, setUserForm}:
     <div
       key={index}
       onClick={() => onButtonClick(letter)}
-      className={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[8vw] h-[8vw] md:w-14 md:h-14 lg:w-16 lg:h-16 hover:cursor-pointer ${
+      className={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[8vw] h-[8vw] md:w-14 md:h-14 lg:w-16 lg:h-16 hover:cursor-pointer select-none ${
         color === 'green' ? 'bg-green-600' :
         color === 'yellow' ? 'bg-yellow-400' :
         color === 'slate' ? 'bg-gray-300' : 'bg-white'}`}
