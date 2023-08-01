@@ -7,7 +7,7 @@ import WordMapper from "./components/WordMapper";
 import Underscores from "./components/Underscores";
 
 function App() {
-  const [darkTheme, setDarkTheme] = useState(false)
+  const [darkTheme, setDarkTheme] = useState(true)
   const [correctWord, setCorrectWord] = useState('')
   const [words, setWords] = useState<string[][]>(() => 
   localStorage.getItem('words') ? JSON.parse(localStorage.getItem('words')!) : [['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], 
