@@ -65,9 +65,7 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
       id={letter}
       key={index}
       onClick={() => onButtonClick(letter)}
-      classes={`
-      flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[7.5vw] h-[7.5vw] md:w-14 md:h-14 hover:cursor-pointer select-none
-      ${
+      classes={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[7.5vw] h-[7vw] md:w-12 md:h-14 hover:cursor-pointer select-none ${
         color === 'green' ? 'bg-green-600' :
         color === 'yellow' ? 'bg-yellow-400' :
         color === 'slate' ? 'bg-gray-300' : 'bg-white'}`}
@@ -87,7 +85,7 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
       id={letter}
       key={index}
       onClick={() => onButtonClick(letter)}
-      classes={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[7.5vw] h-[7vw] md:w-14 md:h-14 hover:cursor-pointer select-none ${
+      classes={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[7.5vw] h-[7vw] md:w-12 md:h-14 hover:cursor-pointer select-none ${
         color === 'green' ? 'bg-green-600' :
         color === 'yellow' ? 'bg-yellow-400' :
         color === 'slate' ? 'bg-gray-300' : 'bg-white'}`}
@@ -102,8 +100,8 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
             <div className="flex justify-center gap-2">
               <div 
               onClick={handleSubmitClick}
-              className={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[8vw] h-[7vw] md:w-18 md:h-14 hover:cursor-pointer select-none bg-white`}>
-              ⏎
+              className={`flex justify-center items-center font-medium text-sm ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[9vw] h-[7vw] md:w-[68px] md:h-14 hover:cursor-pointer select-none bg-white`}>
+              ENTER
               </div>
             {thirdRow.map((letter, index) => {
   const color = getKeyColor(letter.toUpperCase())
@@ -112,7 +110,7 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
       id={letter}
       key={index}
       onClick={() => onButtonClick(letter)}
-      classes={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[7.5vw] h-[7vw] md:w-14 md:h-14 hover:cursor-pointer select-none ${
+      classes={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[7.5vw] h-[7vw] md:w-12 md:h-14 hover:cursor-pointer select-none ${
         color === 'green' ? 'bg-green-600' :
         color === 'yellow' ? 'bg-yellow-400' :
         color === 'slate' ? 'bg-gray-300' : 'bg-white'}`}
@@ -124,7 +122,7 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
 
   <div 
   onClick={handleDeleteClick}
-  className={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[8vw] h-[7vw] md:w-18 md:h-14 hover:cursor-pointer select-none bg-white`}>
+  className={`flex justify-center items-center font-medium text-lg md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[9vw] h-[7vw] md:w-[68px] md:h-14 hover:cursor-pointer select-none bg-white`}>
               ⌫
               </div>
             </div>
