@@ -12,7 +12,7 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
     ]
   
     const thirdRow: string[] = [
-        "z", "x", "c", "v", "b", "n", "m"
+       "z", "x", "c", "v", "b", "n", "m"
     ]
 
     function getKeyColor(letter: string) {
@@ -43,12 +43,19 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
         cpy[emptyIndex] = letter
         setHangman(cpy)
       }
+    }
 
+    function handleSubmitClick() {
+      return
+    }
+
+    function handleDeleteClick() {
+      return
     }
       
 
     return (
-        <div className="flex justify-center mt-8 md:mt-6 lg:mt-8 xl:mt-12">
+        <div className="flex justify-center mt-[10vh]">
             <div className="flex flex-col gap-2 justify-center my-2">
             <div className="flex justify-center gap-2">
             {firstRow.map((letter, index) => {
@@ -59,7 +66,7 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
       key={index}
       onClick={() => onButtonClick(letter)}
       classes={`
-      flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[7vw] h-[7vw] md:w-14 md:h-14 hover:cursor-pointer select-none 
+      flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[7.5vw] h-[7.5vw] md:w-14 md:h-14 hover:cursor-pointer select-none
       ${
         color === 'green' ? 'bg-green-600' :
         color === 'yellow' ? 'bg-yellow-400' :
@@ -80,7 +87,7 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
       id={letter}
       key={index}
       onClick={() => onButtonClick(letter)}
-      classes={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[7vw] h-[7vw] md:w-14 md:h-14 hover:cursor-pointer select-none ${
+      classes={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[7.5vw] h-[7vw] md:w-14 md:h-14 hover:cursor-pointer select-none ${
         color === 'green' ? 'bg-green-600' :
         color === 'yellow' ? 'bg-yellow-400' :
         color === 'slate' ? 'bg-gray-300' : 'bg-white'}`}
@@ -93,6 +100,11 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
             </div>
 
             <div className="flex justify-center gap-2">
+              <div 
+              onClick={handleSubmitClick}
+              className={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[8vw] h-[7vw] md:w-18 md:h-14 hover:cursor-pointer select-none bg-white`}>
+              ⏎
+              </div>
             {thirdRow.map((letter, index) => {
   const color = getKeyColor(letter.toUpperCase())
   return (
@@ -100,7 +112,7 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
       id={letter}
       key={index}
       onClick={() => onButtonClick(letter)}
-      classes={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[7vw] h-[7vw] md:w-14 md:h-14 hover:cursor-pointer select-none ${
+      classes={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[7.5vw] h-[7vw] md:w-14 md:h-14 hover:cursor-pointer select-none ${
         color === 'green' ? 'bg-green-600' :
         color === 'yellow' ? 'bg-yellow-400' :
         color === 'slate' ? 'bg-gray-300' : 'bg-white'}`}
@@ -110,6 +122,11 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
   )
 })}
 
+  <div 
+  onClick={handleDeleteClick}
+  className={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[8vw] h-[7vw] md:w-18 md:h-14 hover:cursor-pointer select-none bg-white`}>
+              ⌫
+              </div>
             </div>
 
         </div>

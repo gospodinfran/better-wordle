@@ -10,7 +10,7 @@ export interface WordMapperProps {
 
 export default function WordMapper({ darkTheme, words, answer, setCompleted }: WordMapperProps) {
 
-    return (<>
+    return (<div className="mt-[10vh]">
         { words.map((word: string[], index: number) => {
             return <WordMatrix
             key={index}
@@ -20,6 +20,6 @@ export default function WordMapper({ darkTheme, words, answer, setCompleted }: W
             setCompleted={setCompleted}
             />
           }) }
-          </>
+          </div>
     )
 }
