@@ -16,13 +16,13 @@ export default function WordMatrix({ darkTheme, word, answer, setCompleted }: Wo
         letter == answer[index] ? score += 1 : ''
         score === 5 ? setCompleted(true) : ''
 
-        const isCorrectLetterAndPosition = letter == answer[index];
+        const isCorrectLetterAndPosition = letter == answer[index]
         const isCorrectLetterWrongPosition =
-          !isCorrectLetterAndPosition && answer.includes(letter) && letter !== '';
+          !isCorrectLetterAndPosition && answer.includes(letter) && letter !== ''
         const isWrongLetter = !isCorrectLetterAndPosition && !isCorrectLetterWrongPosition;
 
         const backgroundColorClass = 
-        `flex justify-center items-center text-4xl lg:text-5xl font-normal p-0 w-12 h-12 md:w-16 md:h-16 lg:w-16 lg:h-16 ${darkTheme ? 'text-white' : 'border shadow'} 
+        `flex justify-center items-center text-4xl lg:text-5xl font-normal p-0 w-12 h-12 md:w-14 md:h-14 xl:w-[60px] xl:h-[60px] ${darkTheme ? 'text-white' : 'border shadow'} 
         ${isCorrectLetterAndPosition ? 'bg-green-600 ' : ''}
         ${isCorrectLetterWrongPosition ? 'bg-yellow-500 ' : ''}
         ${isWrongLetter && darkTheme ? 'bg-[#303030]' : 
@@ -40,7 +40,7 @@ export default function WordMatrix({ darkTheme, word, answer, setCompleted }: Wo
           >
             {letter.toUpperCase()}
           </div>
-        );
+        )
       })}
     </div>
   );
