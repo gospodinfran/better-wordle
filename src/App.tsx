@@ -4,7 +4,8 @@ import Keyboard from "./components/Keyboard";
 import LostMenu from "./components/LostMenu";
 import VictoryMenu from "./components/VictoryMenu";
 import WordMapper from "./components/WordMapper";
-import Underscores from "./components/Underscores";
+import { DndContext } from "@dnd-kit/core";
+
 
 function App() {
   const [darkTheme, setDarkTheme] = useState(true)
@@ -92,13 +93,15 @@ function App() {
   }*/}
 
   return (
-    <div className={`${darkTheme ? 'bg-[#171717]' : ''} h-screen w-screen`}>
+    <div className={`${darkTheme ? 'bg-[#171717]' : ''} h-full w-full min-h-screen`}>
       <Header darkTheme={darkTheme} setDarkTheme={setDarkTheme}/>
+      <DndContext>
       <WordMapper darkTheme={darkTheme} words={words} answer={correctWord} setCompleted={setCompleted} />
-      <Underscores darkTheme={darkTheme} userForm={hangmanForm} />
+      {/*<Underscores darkTheme={darkTheme} userForm={hangmanForm} />*/}
       <VictoryMenu completed={completed} />
       <LostMenu show={index == 6 && !completed} word={correctWord} />
       <Keyboard darkTheme={darkTheme} answer={correctWord} words={words} hangmanForm={hangmanForm} setHangman={setHangmanForm} />
+      </DndContext>
     </div>
   )
 }

@@ -1,3 +1,5 @@
+import Draggable from "./DragNDrop/draggable"
+
 export default function Keyboard({darkTheme, answer, words, hangmanForm, setHangman}: 
     {darkTheme: boolean, answer: string, words: string[][], hangmanForm: string[], setHangman: React.Dispatch<React.SetStateAction<string[]>>}) {
     // First row of the QWERTY keyboard
@@ -5,12 +7,10 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
         "q", "w", "e", "r", "t", "y", "u", "i", "o", "p"
     ]
   
-    // Second row
     const secondRow: string[] = [
         "a", "s", "d", "f", "g", "h", "j", "k", "l"
     ]
   
-  // Third row
     const thirdRow: string[] = [
         "z", "x", "c", "v", "b", "n", "m"
     ]
@@ -48,24 +48,25 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
       
 
     return (
-        <div className="flex justify-center mt-4 md:mt-6 lg:mt-8 xl:mt-12">
+        <div className="flex justify-center mt-8 md:mt-6 lg:mt-8 xl:mt-12">
             <div className="flex flex-col gap-2 justify-center my-2">
             <div className="flex justify-center gap-2">
             {firstRow.map((letter, index) => {
   const color = getKeyColor(letter.toUpperCase())
   return (
-    <div
+    <Draggable
+      id={letter}
       key={index}
       onClick={() => onButtonClick(letter)}
-      className={`
-      flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[8vw] h-[8vw] md:w-14 md:h-14 lg:w-16 lg:h-16 hover:cursor-pointer select-none 
+      classes={`
+      flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[7vw] h-[7vw] md:w-14 md:h-14 hover:cursor-pointer select-none 
       ${
         color === 'green' ? 'bg-green-600' :
         color === 'yellow' ? 'bg-yellow-400' :
         color === 'slate' ? 'bg-gray-300' : 'bg-white'}`}
     >
       {letter.toUpperCase()}
-    </div>
+    </Draggable>
   )
 })}
 
@@ -75,16 +76,17 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
             {secondRow.map((letter, index) => {
   const color = getKeyColor(letter.toUpperCase())
   return (
-    <div
+    <Draggable
+      id={letter}
       key={index}
       onClick={() => onButtonClick(letter)}
-      className={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[8vw] h-[8vw] md:w-14 md:h-14 lg:w-16 lg:h-16 hover:cursor-pointer select-none ${
+      classes={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[7vw] h-[7vw] md:w-14 md:h-14 hover:cursor-pointer select-none ${
         color === 'green' ? 'bg-green-600' :
         color === 'yellow' ? 'bg-yellow-400' :
         color === 'slate' ? 'bg-gray-300' : 'bg-white'}`}
     >
       {letter.toUpperCase()}
-    </div>
+    </Draggable>
   )
 })}
 
@@ -94,16 +96,17 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
             {thirdRow.map((letter, index) => {
   const color = getKeyColor(letter.toUpperCase())
   return (
-    <div
+    <Draggable
+      id={letter}
       key={index}
       onClick={() => onButtonClick(letter)}
-      className={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[8vw] h-[8vw] md:w-14 md:h-14 lg:w-16 lg:h-16 hover:cursor-pointer select-none ${
+      classes={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[7vw] h-[7vw] md:w-14 md:h-14 hover:cursor-pointer select-none ${
         color === 'green' ? 'bg-green-600' :
         color === 'yellow' ? 'bg-yellow-400' :
         color === 'slate' ? 'bg-gray-300' : 'bg-white'}`}
     >
       {letter.toUpperCase()}
-    </div>
+    </Draggable>
   )
 })}
 
