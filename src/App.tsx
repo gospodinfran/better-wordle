@@ -9,7 +9,7 @@ import { DndContext } from "@dnd-kit/core";
 
 function App() {
   const [darkTheme, setDarkTheme] = useState(true)
-  const [correctWord, setCorrectWord] = useState('')
+  //const [correctWord, setCorrectWord] = useState('')
   const [words, setWords] = useState<string[][]>(() => 
   localStorage.getItem('words') ? JSON.parse(localStorage.getItem('words')!) : [['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], 
   ['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', '']])
@@ -18,7 +18,9 @@ function App() {
   const [hangmanForm, setHangmanForm] = useState(['', '', '', '', ''])
   const [completed, setCompleted] = useState(false)
 
-  useEffect(() => {
+  const correctWord = 'anime'
+
+  {/*useEffect(() => {
     if (localStorage.getItem('lastPlayDate') !== new Date().toLocaleDateString()) {
       setWords([['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], 
       ['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', '']])
@@ -32,7 +34,7 @@ function App() {
         setCorrectWord(data.wordleWords[x]);
       })
       .catch(err => console.log('Error fetching data: ', err));
-  }, []);
+  }, []);*/}
 
   useEffect(() => {
     localStorage.setItem('words', JSON.stringify(words))
@@ -46,6 +48,8 @@ function App() {
     }
     setIndex(populatedWords)
   }, [words])
+
+
 
   {/*function handleInputChange(e: any) {
     const regex: RegExp = /^[a-zA-Z]+$/
@@ -92,16 +96,27 @@ function App() {
     }
   }*/}
 
+  function handleDragEnd({active, over}: {active: any, over: any}) {
+    if (over) {
+      setWords(words => {
+        let curWord = words[index]
+        curWord[over.id] = active.id
+        return [...words.slice(0, index), curWord, ...words.slice(index + 1)]
+      })
+    }
+  }
+
   return (
     <div className={`${darkTheme ? 'bg-[#171717]' : ''} h-full w-full min-h-screen`}>
       <Header darkTheme={darkTheme} setDarkTheme={setDarkTheme}/>
-      <DndContext>
-      <WordMapper darkTheme={darkTheme} words={words} answer={correctWord} setCompleted={setCompleted} />
+      <DndContext onDragEnd={handleDragEnd}>
+      <WordMapper darkTheme={darkTheme} words={words} answer={correctWord} setCompleted={setCompleted} curRow={index} />
       {/*<Underscores darkTheme={darkTheme} userForm={hangmanForm} />*/}
       <VictoryMenu completed={completed} />
       <LostMenu show={index == 6 && !completed} word={correctWord} />
       <Keyboard darkTheme={darkTheme} answer={correctWord} words={words} hangmanForm={hangmanForm} setHangman={setHangmanForm} />
       </DndContext>
+      <button onClick={() => setIndex(prev => prev + 1)}>submit yo</button>
     </div>
   )
 }

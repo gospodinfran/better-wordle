@@ -1,16 +1,23 @@
 import {useDroppable} from '@dnd-kit/core';
 
-export default function Droppable(props: any) {
+interface componentProps {
+  children: any;
+  id: string;
+  classes: string;
+
+}
+
+export default function Droppable({ children, id, classes }: componentProps) {
   const {isOver, setNodeRef} = useDroppable({
-    id: props.id,
+    id: id,
   });
   const style = {
-    opacity: isOver ? 1 : 0.5,
+    opacity: isOver ? 1 : .5,
   };
 
   return (
-    <div ref={setNodeRef} style={style}>
-      {props.children}
+    <div ref={setNodeRef} style={style} className={classes}>
+      {children}
     </div>
   );
 }

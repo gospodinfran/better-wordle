@@ -1,12 +1,14 @@
+import Droppable from "./DragNDrop/droppable";
 
 interface WordMatrixProps {
   darkTheme: boolean;
   word: string[];
   answer: string;
   setCompleted: React.Dispatch<React.SetStateAction<boolean>>;
+  droppable: boolean;
 }
 
-export default function WordMatrix({ darkTheme, word, answer, setCompleted }: WordMatrixProps) {
+export default function WordMatrix({ darkTheme, word, answer, setCompleted, droppable }: WordMatrixProps) {
   let score = 0
 
   return (
@@ -32,15 +34,28 @@ export default function WordMatrix({ darkTheme, word, answer, setCompleted }: Wo
           (letter === '' || !letter) && darkTheme ? 'bg-[#1b1a1a]' : 
           (letter === '' || !letter) && !darkTheme ? 'bg-slate-50' : ''
         }`
+
+        if (droppable) {
+          return (
+            <Droppable
+              id={`${letter}${index}`}
+              key={`${letter}${index}`}
+              classes={backgroundColorClass}
+            >
+              {letter.toUpperCase()}
+            </Droppable>
+          )
+        } else {
+          return (
+            <div
+              key={`${letter}${index}`}
+              className={backgroundColorClass}
+            >
+              {letter.toUpperCase()}
+            </div>
+          )
+        }
         
-        return (
-          <div
-            key={index}
-            className={backgroundColorClass}
-          >
-            {letter.toUpperCase()}
-          </div>
-        )
       })}
     </div>
   );
