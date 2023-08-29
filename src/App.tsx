@@ -9,9 +9,9 @@ import { DndContext } from "@dnd-kit/core";
 
 function App() {
   const [darkTheme, setDarkTheme] = useState(true)
-  //const [correctWord, setCorrectWord] = useState('')
+  //const [correctWord, setCorrectWord] = useState('anime')
   const [words, setWords] = useState<string[][]>(() => 
-  localStorage.getItem('words') ? JSON.parse(localStorage.getItem('words')!) : [['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], 
+   [['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], 
   ['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', '']])
   const [index, setIndex] = useState(0)
   //const [userForm, setUserForm] = useState('')
@@ -34,7 +34,7 @@ function App() {
         setCorrectWord(data.wordleWords[x]);
       })
       .catch(err => console.log('Error fetching data: ', err));
-  }, []);*/}
+  }, [])*/}
 
   useEffect(() => {
     localStorage.setItem('words', JSON.stringify(words))
@@ -100,7 +100,7 @@ function App() {
     if (over) {
       setWords(words => {
         let curWord = words[index]
-        curWord[over.id] = active.id
+        curWord[over.id] = active.id.toLowerCase()
         return [...words.slice(0, index), curWord, ...words.slice(index + 1)]
       })
     }
@@ -116,7 +116,14 @@ function App() {
       <LostMenu show={index == 6 && !completed} word={correctWord} />
       <Keyboard darkTheme={darkTheme} answer={correctWord} words={words} hangmanForm={hangmanForm} setHangman={setHangmanForm} />
       </DndContext>
-      <button onClick={() => setIndex(prev => prev + 1)}>submit yo</button>
+      <h2 className="text-white">Debug only</h2>
+      <button onClick={() => setIndex(prev => prev + 1)}
+       className="bg-white p-1">Go to next row</button>
+       <button onClick={() => setWords([['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], 
+  ['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', '']])}
+  className="bg-white p-1">
+        Reset game
+       </button>
     </div>
   )
 }

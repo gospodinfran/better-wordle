@@ -14,7 +14,7 @@ export default function WordMatrix({ darkTheme, word, answer, setCompleted, drop
   return (
     <div className="flex gap-2 justify-center my-2">
       {word.map((letter: string, index: number) => {
-        letter = letter.toUpperCase()
+        letter = letter.toLowerCase()
         letter == answer[index] ? score += 1 : ''
         score === 5 ? setCompleted(true) : ''
 
@@ -22,6 +22,10 @@ export default function WordMatrix({ darkTheme, word, answer, setCompleted, drop
         const isCorrectLetterWrongPosition =
           !isCorrectLetterAndPosition && answer.includes(letter) && letter !== ''
         const isWrongLetter = !isCorrectLetterAndPosition && !isCorrectLetterWrongPosition;
+
+        console.log(`correct letter and position: ${isCorrectLetterAndPosition}, letter: ${letter}, correct: ${answer[index]}`)
+        console.log(`correct letter wrong position: ${isCorrectLetterWrongPosition}`)
+        console.log(`wrong letter: ${isWrongLetter}`)
 
         const backgroundColorClass = 
         `flex justify-center items-center text-4xl lg:text-5xl font-normal p-0 w-12 h-12 md:w-14 md:h-14 xl:w-[60px] xl:h-[60px] ${darkTheme ? 'text-white' : 'border shadow'} 

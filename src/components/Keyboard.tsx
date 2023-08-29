@@ -61,9 +61,9 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
             {firstRow.map((letter, index) => {
   const color = getKeyColor(letter.toUpperCase())
   return (
-    <Draggable
+      <Draggable
       id={letter}
-      key={index}
+      key={letter+index}
       onClick={() => onButtonClick(letter)}
       classes={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[7vw] h-[8vw] md:w-12 md:h-14 hover:cursor-pointer select-none touch-none ${
         color === 'green' ? 'bg-green-600' :
@@ -72,6 +72,7 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
     >
       {letter.toUpperCase()}
     </Draggable>
+    
   )
 })}
 
@@ -83,7 +84,7 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
   return (
     <Draggable
       id={letter}
-      key={index}
+      key={letter+index}
       onClick={() => onButtonClick(letter)}
       classes={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[7vw] h-[8vw] md:w-12 md:h-14 hover:cursor-pointer select-none touch-none ${
         color === 'green' ? 'bg-green-600' :
@@ -108,7 +109,7 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
   return (
     <Draggable
       id={letter}
-      key={index}
+      key={letter+index}
       onClick={() => onButtonClick(letter)}
       classes={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[7vw] h-[8vw] md:w-12 md:h-14 hover:cursor-pointer select-none touch-none ${
         color === 'green' ? 'bg-green-600' :
