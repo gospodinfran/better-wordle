@@ -4,7 +4,6 @@ interface componentProps {
   children: any;
   id: string;
   classes: string;
-
 }
 
 export default function Droppable({ children, id, classes }: componentProps) {
@@ -12,7 +11,7 @@ export default function Droppable({ children, id, classes }: componentProps) {
     id: id,
   });
   const style = {
-    opacity: isOver ? 1 : .5,
+    opacity: isOver ? 1 : .95,
   };
 
   return (

@@ -6,9 +6,10 @@ interface WordMatrixProps {
   answer: string;
   setCompleted: React.Dispatch<React.SetStateAction<boolean>>;
   droppable: boolean;
+  parentKeys: string[];
 }
 
-export default function WordMatrix({ darkTheme, word, answer, setCompleted, droppable }: WordMatrixProps) {
+export default function WordMatrix({ darkTheme, word, answer, setCompleted, droppable, parentKeys }: WordMatrixProps) {
   let score = 0
 
   return (
@@ -23,9 +24,6 @@ export default function WordMatrix({ darkTheme, word, answer, setCompleted, drop
           !isCorrectLetterAndPosition && answer.includes(letter) && letter !== ''
         const isWrongLetter = !isCorrectLetterAndPosition && !isCorrectLetterWrongPosition;
 
-        console.log(`correct letter and position: ${isCorrectLetterAndPosition}, letter: ${letter}, correct: ${answer[index]}`)
-        console.log(`correct letter wrong position: ${isCorrectLetterWrongPosition}`)
-        console.log(`wrong letter: ${isWrongLetter}`)
 
         const backgroundColorClass = 
         `flex justify-center items-center text-4xl lg:text-5xl font-normal p-0 w-12 h-12 md:w-14 md:h-14 xl:w-[60px] xl:h-[60px] ${darkTheme ? 'text-white' : 'border shadow'} 
@@ -44,9 +42,11 @@ export default function WordMatrix({ darkTheme, word, answer, setCompleted, drop
             <Droppable
               id={`${letter}${index}`}
               key={`${letter}${index}`}
-              classes={backgroundColorClass}
+              classes={`flex justify-center items-center text-4xl lg:text-5xl font-normal p-0 w-12 h-12 md:w-14 md:h-14 xl:w-[60px] xl:h-[60px] ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg hover:cursor-pointer select-none touch-none bg-white`}
             >
-              {letter.toUpperCase()}
+              {/*If droppable, won't have letter. Only parent.*/}
+              { parentKeys[index] !== '' ? parentKeys[index].toUpperCase()
+              : 'yo'}
             </Droppable>
           )
         } else {

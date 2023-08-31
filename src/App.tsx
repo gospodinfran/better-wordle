@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Header from "./components/Header";
 import Keyboard from "./components/Keyboard";
 import LostMenu from "./components/LostMenu";
@@ -13,6 +13,7 @@ function App() {
   const [words, setWords] = useState<string[][]>(() => 
    [['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], 
   ['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', '']])
+  const [parentKeys, setParentKeys] = useState<string[]>(['a', 'n', 'i', 'm', 'e'])
   const [index, setIndex] = useState(0)
   //const [userForm, setUserForm] = useState('')
   const [hangmanForm, setHangmanForm] = useState(['', '', '', '', ''])
@@ -36,7 +37,8 @@ function App() {
       .catch(err => console.log('Error fetching data: ', err));
   }, [])*/}
 
-  useEffect(() => {
+  {/*useEffect(() => {
+    // works fine can be added later
     localStorage.setItem('words', JSON.stringify(words))
 
     let populatedWords = 0
@@ -47,7 +49,7 @@ function App() {
       populatedWords++
     }
     setIndex(populatedWords)
-  }, [words])
+  }, [words])*/}
 
 
 
@@ -98,10 +100,12 @@ function App() {
 
   function handleDragEnd({active, over}: {active: any, over: any}) {
     if (over) {
-      setWords(words => {
-        let curWord = words[index]
-        curWord[over.id] = active.id.toLowerCase()
-        return [...words.slice(0, index), curWord, ...words.slice(index + 1)]
+      setParentKeys(word => {
+        const key = active.id.toLowerCase()
+        const wordIndex = over.id
+        let updatedWord = [...word]
+        updatedWord[wordIndex] = key
+        return updatedWord
       })
     }
   }
@@ -110,7 +114,7 @@ function App() {
     <div className={`${darkTheme ? 'bg-[#171717]' : ''} h-full w-full min-h-screen`}>
       <Header darkTheme={darkTheme} setDarkTheme={setDarkTheme}/>
       <DndContext onDragEnd={handleDragEnd}>
-      <WordMapper darkTheme={darkTheme} words={words} answer={correctWord} setCompleted={setCompleted} curRow={index} />
+      <WordMapper darkTheme={darkTheme} words={words} answer={correctWord} setCompleted={setCompleted} curRow={index} parentKeys={parentKeys} />
       {/*<Underscores darkTheme={darkTheme} userForm={hangmanForm} />*/}
       <VictoryMenu completed={completed} />
       <LostMenu show={index == 6 && !completed} word={correctWord} />

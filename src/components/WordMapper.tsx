@@ -7,9 +7,10 @@ export interface WordMapperProps {
     answer: string;
     setCompleted: React.Dispatch<React.SetStateAction<boolean>>;
     curRow: number;
+    parentKeys: string[];
 }
 
-export default function WordMapper({ darkTheme, words, answer, setCompleted, curRow }: WordMapperProps) {
+export default function WordMapper({ darkTheme, words, answer, setCompleted, curRow, parentKeys }: WordMapperProps) {
 
     return (<div className="mt-[9vh]">
         { words.map((word: string[], index: number) => {
@@ -20,6 +21,7 @@ export default function WordMapper({ darkTheme, words, answer, setCompleted, cur
             answer={answer}
             setCompleted={setCompleted}
             droppable={index === curRow ? true : false}
+            parentKeys={parentKeys}
             />
           }) }
           </div>
