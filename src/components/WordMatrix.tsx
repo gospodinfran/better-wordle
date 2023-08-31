@@ -18,6 +18,7 @@ export default function WordMatrix({ darkTheme, word, answer, setCompleted, drop
         letter = letter.toLowerCase()
         letter == answer[index] ? score += 1 : ''
         score === 5 ? setCompleted(true) : ''
+        const parentLetter = parentKeys[index]
 
         const isCorrectLetterAndPosition = letter == answer[index]
         const isCorrectLetterWrongPosition =
@@ -42,11 +43,11 @@ export default function WordMatrix({ darkTheme, word, answer, setCompleted, drop
             <Droppable
               id={`${letter}${index}`}
               key={`${letter}${index}`}
-              classes={`flex justify-center items-center text-4xl lg:text-5xl font-normal p-0 w-12 h-12 md:w-14 md:h-14 xl:w-[60px] xl:h-[60px] ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg hover:cursor-pointer select-none touch-none bg-white`}
+              classes={`flex justify-center items-center text-4xl lg:text-5xl font-normal p-0 w-12 h-12 md:w-14 md:h-14 xl:w-[60px] xl:h-[60px] ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg hover:cursor-pointer select-none touch-none ${parentLetter === '' ? 'bg-[#303030]' : 'bg-white'}`}
             >
               {/*If droppable, won't have letter. Only parent.*/}
-              { parentKeys[index] !== '' ? parentKeys[index].toUpperCase()
-              : 'yo'}
+              { parentLetter !== '' ? parentLetter.toUpperCase()
+              : ''}
             </Droppable>
           )
         } else {

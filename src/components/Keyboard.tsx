@@ -1,7 +1,15 @@
 import Draggable from "./DragNDrop/draggable"
 
-export default function Keyboard({darkTheme, answer, words, hangmanForm, setHangman}: 
-    {darkTheme: boolean, answer: string, words: string[][], hangmanForm: string[], setHangman: React.Dispatch<React.SetStateAction<string[]>>}) {
+interface Props {
+  darkTheme: boolean;
+  answer: string;
+  words: string[][];
+  hangmanForm: string[];
+  setHangman: React.Dispatch<React.SetStateAction<string[]>>;
+  onFormSubmit: any;
+}
+
+export default function Keyboard({darkTheme, answer, words, hangmanForm, setHangman, onFormSubmit}: Props) {
     // First row of the QWERTY keyboard
     const firstRow: string[] = [
         "q", "w", "e", "r", "t", "y", "u", "i", "o", "p"
@@ -43,10 +51,6 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
         cpy[emptyIndex] = letter
         setHangman(cpy)
       }
-    }
-
-    function handleSubmitClick() {
-      return
     }
 
     function handleDeleteClick() {
@@ -99,7 +103,7 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
 
             <div className="flex justify-center gap-2">
               <div 
-              onClick={handleSubmitClick}
+              onClick={onFormSubmit}
               className={`flex justify-center items-center font-medium text-sm ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[11vw] h-[8vw] md:w-[68px] md:h-14 hover:cursor-pointer select-none bg-white`}>
               ENTER
               </div>

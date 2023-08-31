@@ -13,9 +13,9 @@ function App() {
   const [words, setWords] = useState<string[][]>(() => 
    [['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], 
   ['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', '']])
-  const [parentKeys, setParentKeys] = useState<string[]>(['a', 'n', 'i', 'm', 'e'])
+  const [parentKeys, setParentKeys] = useState<string[]>(['', '', '', '', ''])
   const [index, setIndex] = useState(0)
-  //const [userForm, setUserForm] = useState('')
+  const [userForm, setUserForm] = useState('')
   const [hangmanForm, setHangmanForm] = useState(['', '', '', '', ''])
   const [completed, setCompleted] = useState(false)
 
@@ -64,6 +64,14 @@ function App() {
     if ((regex.test(inputValue) || inputValue === '') && userForm.length < 5 ) {
       setUserForm(inputValue)
     } 
+  }*/}
+
+  function isFull(array: string[]) {
+    for (let i = 0; i < array.length; i++) {
+      if (array[i] === '')
+        return false
+    }
+    return true
   }
 
   async function handleFormSubmit(e: React.ChangeEvent) {
@@ -73,7 +81,7 @@ function App() {
 
 
     if (index < 6) {
-      if (userForm.length === 5) {
+      if (userForm.length === 5 || isFull(parentKeys)) {
         const word = userForm.toUpperCase().split('')
         const word_as_string = word.join("").toLowerCase()
 
@@ -87,16 +95,18 @@ function App() {
               word,
               ...prevWords.slice(index + 1),
             ])
-            setIndex(prev => prev + 1)
-            setUserForm('')
           }
 
         } catch (e) {
           console.log('Error: ', e)
+        } finally {
+          setIndex(prev => prev + 1)
+          setParentKeys(['', '', '', '', ''])
+          setUserForm('')
         }
       }
     }
-  }*/}
+  }
 
   function handleDragEnd({active, over}: {active: any, over: any}) {
     if (over) {
@@ -118,7 +128,7 @@ function App() {
       {/*<Underscores darkTheme={darkTheme} userForm={hangmanForm} />*/}
       <VictoryMenu completed={completed} />
       <LostMenu show={index == 6 && !completed} word={correctWord} />
-      <Keyboard darkTheme={darkTheme} answer={correctWord} words={words} hangmanForm={hangmanForm} setHangman={setHangmanForm} />
+      <Keyboard darkTheme={darkTheme} answer={correctWord} words={words} hangmanForm={hangmanForm} setHangman={setHangmanForm} onFormSubmit={handleFormSubmit} />
       </DndContext>
       <h2 className="text-white">Debug only</h2>
       <button onClick={() => setIndex(prev => prev + 1)}
