@@ -45,9 +45,9 @@ export default function Keyboard({darkTheme, answer, words, onFormSubmit, onKeyC
       }
 
     return (
-        <div className="flex justify-center mt-[8vh]">
-            <div className="flex flex-col gap-2 justify-center my-2">
-            <div className="flex justify-center gap-2">
+        <div className="flex justify-center mt-[6vh] md:mt-[8vh]">
+            <div className="flex flex-col gap-[5px] md:gap-2 justify-center my-2">
+            <div className="flex justify-center gap-[5px] md:gap-2 ">
             {firstRow.map((letter, index) => {
   const color = getKeyColor(letter.toUpperCase())
   return (
@@ -55,7 +55,7 @@ export default function Keyboard({darkTheme, answer, words, onFormSubmit, onKeyC
   id={letter}
   key={letter+index}
   onClick={() => onKeyClick(letter)}
-  classes={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded md:rounded-md p-0 w-[7vw] h-[8vw] md:w-12 md:h-14 hover:cursor-pointer select-none touch-none ${
+  classes={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded md:rounded-md p-0 w-[7vw] h-[9vw] md:w-12 md:h-[60px] hover:cursor-pointer select-none touch-none ${
     color === 'green' ? 'bg-green-600' :
     color === 'yellow' ? 'bg-yellow-400' :
     color === 'slate' ? 'bg-gray-300' : 'bg-white'}`}
@@ -67,7 +67,7 @@ export default function Keyboard({darkTheme, answer, words, onFormSubmit, onKeyC
 
             </div>
 
-            <div className="flex justify-center gap-2">
+            <div className="flex justify-center gap-[5px] md:gap-2">
             {secondRow.map((letter, index) => {
   const color = getKeyColor(letter.toUpperCase())
   return (
@@ -75,7 +75,7 @@ export default function Keyboard({darkTheme, answer, words, onFormSubmit, onKeyC
       id={letter}
       key={letter+index}
       onClick={() => onKeyClick(letter)}
-      classes={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded md:rounded-md p-0 w-[7vw] h-[8vw] md:w-12 md:h-14 hover:cursor-pointer select-none touch-none ${
+      classes={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded md:rounded-md p-0 w-[7vw] h-[9vw] md:w-12 md:h-[60px] hover:cursor-pointer select-none touch-none ${
         color === 'green' ? 'bg-green-600' :
         color === 'yellow' ? 'bg-yellow-400' :
         color === 'slate' ? 'bg-gray-300' : 'bg-white'}`}
@@ -87,10 +87,10 @@ export default function Keyboard({darkTheme, answer, words, onFormSubmit, onKeyC
 
             </div>
 
-            <div className="flex justify-center gap-2">
+            <div className="flex justify-center gap-[5px] md:gap-2">
               <div 
               onClick={onFormSubmit}
-              className={`flex justify-center items-center font-medium text-sm ${darkTheme ? '' : 'border-2  border-gray-300'}rounded md:rounded-md p-0 w-[11vw] h-[8vw] md:w-[68px] md:h-14 hover:cursor-pointer select-none bg-white`}>
+              className={`flex justify-center items-center font-medium text-sm ${darkTheme ? '' : 'border-2  border-gray-300'}rounded md:rounded-md p-0 w-[12vw] h-[9vw] md:w-[68px] md:h-[60px] hover:cursor-pointer select-none bg-white`}>
               ENTER
               </div>
             {thirdRow.map((letter, index) => {
@@ -100,7 +100,7 @@ export default function Keyboard({darkTheme, answer, words, onFormSubmit, onKeyC
       id={letter}
       key={letter+index}
       onClick={() => onKeyClick(letter)}
-      classes={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded md:rounded-md p-0 w-[7vw] h-[8vw] md:w-12 md:h-14 hover:cursor-pointer select-none touch-none ${
+      classes={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded md:rounded-md p-0 w-[7vw] h-[9vw] md:w-12 md:h-[60px] hover:cursor-pointer select-none touch-none ${
         color === 'green' ? 'bg-green-600' :
         color === 'yellow' ? 'bg-yellow-400' :
         color === 'slate' ? 'bg-gray-300' : 'bg-white'}`}
@@ -112,7 +112,7 @@ export default function Keyboard({darkTheme, answer, words, onFormSubmit, onKeyC
 
   <div 
   onClick={() => onDeleteKey()}
-  className={`flex justify-center items-center font-medium text-lg md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded md:rounded-md p-0 w-[11vw] h-[8vw] md:w-[68px] md:h-14 hover:cursor-pointer select-none bg-white`}>
+  className={`flex justify-center items-center font-medium text-lg md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded md:rounded-md p-0 w-[12vw] h-[9vw] md:w-[68px] md:h-[60px] hover:cursor-pointer select-none bg-white`}>
               ⌫
               </div>
             </div>
