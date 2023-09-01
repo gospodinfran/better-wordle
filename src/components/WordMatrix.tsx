@@ -15,7 +15,7 @@ export default function WordMatrix({ darkTheme, word, answer, setCompleted, drop
   return (
     <div className="flex gap-2 justify-center my-2">
       {word.map((letter: string, index: number) => {
-        letter = letter.toLowerCase()
+        letter = letter.toUpperCase()
         letter == answer[index] ? score += 1 : ''
         score === 5 ? setCompleted(true) : ''
         const parentLetter = parentKeys[index]
@@ -27,8 +27,8 @@ export default function WordMatrix({ darkTheme, word, answer, setCompleted, drop
 
 
         const backgroundColorClass = 
-        `flex justify-center items-center text-4xl lg:text-5xl font-normal p-0 w-12 h-12 md:w-14 md:h-14 xl:w-[60px] xl:h-[60px] ${darkTheme ? 'text-white' : 'border shadow'} 
-        ${isCorrectLetterAndPosition ? 'bg-green-600 ' : ''}
+        `flex justify-center items-center text-4xl lg:text-5xl font-normal p-0 w-12 h-12 md:w-14 md:h-14 xl:w-[60px] xl:h-[60px] ${darkTheme ? 'text-white' : 'border shadow'}  
+        ${letter == answer[index] ? 'bg-green-600 ' : ''}
         ${isCorrectLetterWrongPosition ? 'bg-yellow-500 ' : ''}
         ${isWrongLetter && darkTheme ? 'bg-[#303030]' : 
         isWrongLetter && !darkTheme ? 'bg-gray-300' : ''
@@ -43,7 +43,7 @@ export default function WordMatrix({ darkTheme, word, answer, setCompleted, drop
             <Droppable
               id={`${letter}${index}`}
               key={`${letter}${index}`}
-              classes={`flex justify-center items-center text-4xl lg:text-5xl font-normal p-0 w-12 h-12 md:w-14 md:h-14 xl:w-[60px] xl:h-[60px] ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg hover:cursor-pointer select-none touch-none ${parentLetter === '' ? 'bg-[#303030]' : 'bg-white'}`}
+              classes={`flex justify-center items-center text-4xl lg:text-5xl font-normal p-0 w-12 h-12 md:w-14 md:h-14 xl:w-[60px] xl:h-[60px] ${darkTheme ? '' : 'border-2  border-gray-300'} hover:cursor-pointer select-none touch-none ${parentLetter === '' ? 'bg-[#303030]' : 'bg-white'}`}
             >
               {/*If droppable, won't have letter. Only parent.*/}
               { parentLetter !== '' ? parentLetter.toUpperCase()

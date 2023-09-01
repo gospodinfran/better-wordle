@@ -4,12 +4,12 @@ interface Props {
   darkTheme: boolean;
   answer: string;
   words: string[][];
-  hangmanForm: string[];
-  setHangman: React.Dispatch<React.SetStateAction<string[]>>;
   onFormSubmit: any;
+  onKeyClick: (letter: string) => void;
+  onDeleteKey: () => void;
 }
 
-export default function Keyboard({darkTheme, answer, words, hangmanForm, setHangman, onFormSubmit}: Props) {
+export default function Keyboard({darkTheme, answer, words, onFormSubmit, onKeyClick, onDeleteKey}: Props) {
     // First row of the QWERTY keyboard
     const firstRow: string[] = [
         "q", "w", "e", "r", "t", "y", "u", "i", "o", "p"
@@ -44,20 +44,6 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
         return color
       }
 
-    function onButtonClick(letter: string) {
-      if (hangmanForm.includes('')) {
-        const emptyIndex = hangmanForm.findIndex(ele => ele === '')
-        const cpy = [...hangmanForm]
-        cpy[emptyIndex] = letter
-        setHangman(cpy)
-      }
-    }
-
-    function handleDeleteClick() {
-      return
-    }
-      
-
     return (
         <div className="flex justify-center mt-[8vh]">
             <div className="flex flex-col gap-2 justify-center my-2">
@@ -68,8 +54,8 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
     <Draggable
   id={letter}
   key={letter+index}
-  onClick={() => onButtonClick(letter)}
-  classes={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[7vw] h-[8vw] md:w-12 md:h-14 hover:cursor-pointer select-none touch-none ${
+  onClick={() => onKeyClick(letter)}
+  classes={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded md:rounded-md p-0 w-[7vw] h-[8vw] md:w-12 md:h-14 hover:cursor-pointer select-none touch-none ${
     color === 'green' ? 'bg-green-600' :
     color === 'yellow' ? 'bg-yellow-400' :
     color === 'slate' ? 'bg-gray-300' : 'bg-white'}`}
@@ -88,8 +74,8 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
     <Draggable
       id={letter}
       key={letter+index}
-      onClick={() => onButtonClick(letter)}
-      classes={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[7vw] h-[8vw] md:w-12 md:h-14 hover:cursor-pointer select-none touch-none ${
+      onClick={() => onKeyClick(letter)}
+      classes={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded md:rounded-md p-0 w-[7vw] h-[8vw] md:w-12 md:h-14 hover:cursor-pointer select-none touch-none ${
         color === 'green' ? 'bg-green-600' :
         color === 'yellow' ? 'bg-yellow-400' :
         color === 'slate' ? 'bg-gray-300' : 'bg-white'}`}
@@ -104,7 +90,7 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
             <div className="flex justify-center gap-2">
               <div 
               onClick={onFormSubmit}
-              className={`flex justify-center items-center font-medium text-sm ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[11vw] h-[8vw] md:w-[68px] md:h-14 hover:cursor-pointer select-none bg-white`}>
+              className={`flex justify-center items-center font-medium text-sm ${darkTheme ? '' : 'border-2  border-gray-300'}rounded md:rounded-md p-0 w-[11vw] h-[8vw] md:w-[68px] md:h-14 hover:cursor-pointer select-none bg-white`}>
               ENTER
               </div>
             {thirdRow.map((letter, index) => {
@@ -113,8 +99,8 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
     <Draggable
       id={letter}
       key={letter+index}
-      onClick={() => onButtonClick(letter)}
-      classes={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[7vw] h-[8vw] md:w-12 md:h-14 hover:cursor-pointer select-none touch-none ${
+      onClick={() => onKeyClick(letter)}
+      classes={`flex justify-center items-center font-medium md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded md:rounded-md p-0 w-[7vw] h-[8vw] md:w-12 md:h-14 hover:cursor-pointer select-none touch-none ${
         color === 'green' ? 'bg-green-600' :
         color === 'yellow' ? 'bg-yellow-400' :
         color === 'slate' ? 'bg-gray-300' : 'bg-white'}`}
@@ -125,8 +111,8 @@ export default function Keyboard({darkTheme, answer, words, hangmanForm, setHang
 })}
 
   <div 
-  onClick={handleDeleteClick}
-  className={`flex justify-center items-center font-medium text-lg md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded-lg p-0 w-[11vw] h-[8vw] md:w-[68px] md:h-14 hover:cursor-pointer select-none bg-white`}>
+  onClick={() => onDeleteKey()}
+  className={`flex justify-center items-center font-medium text-lg md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded md:rounded-md p-0 w-[11vw] h-[8vw] md:w-[68px] md:h-14 hover:cursor-pointer select-none bg-white`}>
               ⌫
               </div>
             </div>

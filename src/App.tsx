@@ -1,41 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import Keyboard from "./components/Keyboard";
 import LostMenu from "./components/LostMenu";
 import VictoryMenu from "./components/VictoryMenu";
 import WordMapper from "./components/WordMapper";
-import { DndContext } from "@dnd-kit/core";
+import { DndContext, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
+import { wordData } from "./wordData";
 
 
 function App() {
   const [darkTheme, setDarkTheme] = useState(true)
-  //const [correctWord, setCorrectWord] = useState('anime')
+  const [correctWord, setCorrectWord] = useState('')
   const [words, setWords] = useState<string[][]>(() => 
    [['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], 
   ['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', '']])
   const [parentKeys, setParentKeys] = useState<string[]>(['', '', '', '', ''])
   const [index, setIndex] = useState(0)
   const [userForm, setUserForm] = useState('')
-  const [hangmanForm, setHangmanForm] = useState(['', '', '', '', ''])
   const [completed, setCompleted] = useState(false)
 
-  const correctWord = 'anime'
-
-  {/*useEffect(() => {
+  useEffect(() => {
     if (localStorage.getItem('lastPlayDate') !== new Date().toLocaleDateString()) {
       setWords([['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], 
       ['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', '']])
     }
-
-    fetch('https://fran-api-bundle.herokuapp.com/wordle')
-      .then(response => response.json())
-      .then(data => {
-        // 687 words in JSON
-        const x = Math.ceil(Math.random() * 687)
-        setCorrectWord(data.wordleWords[x]);
-      })
-      .catch(err => console.log('Error fetching data: ', err));
-  }, [])*/}
+    const corrWord = wordData[Math.floor(Math.random() * wordData.length)]
+    setCorrectWord(corrWord)
+  }, [])
 
   {/*useEffect(() => {
     // works fine can be added later
@@ -66,12 +57,33 @@ function App() {
     } 
   }*/}
 
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    })
+  )
+
   function isFull(array: string[]) {
     for (let i = 0; i < array.length; i++) {
       if (array[i] === '')
         return false
     }
     return true
+  }
+
+  function handleKeyClick(letter: string) {
+    for (let i = 0; i < parentKeys.length; i++) {
+      if (parentKeys[i] === '') {
+        setParentKeys(word => {
+          let updatedWord = [...word]
+          updatedWord[i] = letter
+          return updatedWord
+        })
+        break
+      }
+    }
   }
 
   async function handleFormSubmit(e: React.ChangeEvent) {
@@ -82,28 +94,43 @@ function App() {
 
     if (index < 6) {
       if (userForm.length === 5 || isFull(parentKeys)) {
-        const word = userForm.toUpperCase().split('')
-        const word_as_string = word.join("").toLowerCase()
+
+        let word = parentKeys.join("").toLowerCase()
+        let choppedWord = word.split('')
+        console.log(word)
+        console.log(choppedWord)
+
 
         try {
-          console.log(word_as_string)
-          const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word_as_string}`)
+          const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
           const data = await response.json()
           if (data[0].word) {
             setWords((prevWords) => [
               ...prevWords.slice(0, index),
-              word,
+              choppedWord,
               ...prevWords.slice(index + 1),
             ])
+            setIndex(prev => prev + 1)
+            setParentKeys(['', '', '', '', ''])
+            setUserForm('')
           }
-
         } catch (e) {
           console.log('Error: ', e)
-        } finally {
-          setIndex(prev => prev + 1)
-          setParentKeys(['', '', '', '', ''])
-          setUserForm('')
         }
+      }
+    }
+  }
+
+  function handleDeleteKey() {
+    console.log('clicked')
+    for (let i = 4; i >= 0; i--) {
+      if (parentKeys[i] !== '') {
+        setParentKeys(word => {
+          let updated = [...word]
+          updated[i] = ''
+          return updated
+        })
+        return
       }
     }
   }
@@ -113,9 +140,9 @@ function App() {
       setParentKeys(word => {
         const key = active.id.toLowerCase()
         const wordIndex = over.id
-        let updatedWord = [...word]
-        updatedWord[wordIndex] = key
-        return updatedWord
+        let updated = [...word]
+        updated[wordIndex] = key
+        return updated
       })
     }
   }
@@ -123,12 +150,11 @@ function App() {
   return (
     <div className={`${darkTheme ? 'bg-[#171717]' : ''} h-full w-full min-h-screen`}>
       <Header darkTheme={darkTheme} setDarkTheme={setDarkTheme}/>
-      <DndContext onDragEnd={handleDragEnd}>
+      <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
       <WordMapper darkTheme={darkTheme} words={words} answer={correctWord} setCompleted={setCompleted} curRow={index} parentKeys={parentKeys} />
-      {/*<Underscores darkTheme={darkTheme} userForm={hangmanForm} />*/}
       <VictoryMenu completed={completed} />
       <LostMenu show={index == 6 && !completed} word={correctWord} />
-      <Keyboard darkTheme={darkTheme} answer={correctWord} words={words} hangmanForm={hangmanForm} setHangman={setHangmanForm} onFormSubmit={handleFormSubmit} />
+      <Keyboard darkTheme={darkTheme} answer={correctWord} words={words} onFormSubmit={handleFormSubmit} onKeyClick={handleKeyClick} onDeleteKey={handleDeleteKey} />
       </DndContext>
       <h2 className="text-white">Debug only</h2>
       <button onClick={() => setIndex(prev => prev + 1)}
