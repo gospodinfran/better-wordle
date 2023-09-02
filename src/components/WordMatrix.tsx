@@ -15,7 +15,8 @@ export default function WordMatrix({ darkTheme, word, answer, setCompleted, drop
   return (
     <div className="flex gap-2 justify-center my-2">
       {word.map((letter: string, index: number) => {
-        letter = letter.toUpperCase()
+        letter = letter.toLowerCase()
+        answer = answer.toLowerCase()
         letter == answer[index] ? score += 1 : ''
         score === 5 ? setCompleted(true) : ''
         const parentLetter = parentKeys[index]

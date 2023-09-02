@@ -23,6 +23,8 @@ export default function Keyboard({darkTheme, answer, words, onFormSubmit, onKeyC
        "z", "x", "c", "v", "b", "n", "m"
     ]
 
+    answer = answer.toUpperCase()
+
     function getKeyColor(letter: string) {
         let color = 'white'
       

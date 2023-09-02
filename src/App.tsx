@@ -5,28 +5,47 @@ import LostMenu from "./components/LostMenu";
 import VictoryMenu from "./components/VictoryMenu";
 import WordMapper from "./components/WordMapper";
 import { DndContext, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
-import { wordData } from "./wordData";
 
 
 function App() {
   const [darkTheme, setDarkTheme] = useState(true)
-  const [correctWord, setCorrectWord] = useState('')
+  // const [correctWord, setCorrectWord] = useState('')
   const [words, setWords] = useState<string[][]>(() => 
    [['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], 
   ['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', '']])
   const [parentKeys, setParentKeys] = useState<string[]>(['', '', '', '', ''])
   const [index, setIndex] = useState(0)
-  const [userForm, setUserForm] = useState('')
   const [completed, setCompleted] = useState(false)
 
+  const correctWord = 'ghost'
+  
   useEffect(() => {
     if (localStorage.getItem('lastPlayDate') !== new Date().toLocaleDateString()) {
       setWords([['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], 
       ['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', '']])
     }
-    const corrWord = wordData[Math.floor(Math.random() * wordData.length)]
-    setCorrectWord(corrWord)
+
+    window.addEventListener('keydown', handleKeyPress)
+
+    return () => window.removeEventListener('keydown', handleKeyPress)
+    // const corrWord = wordData[Math.floor(Math.random() * wordData.length)]
+    // setCorrectWord(corrWord)
   }, [])
+
+
+  function handleKeyPress(e: any) {
+    const char = String.fromCharCode(e.keyCode).toLowerCase()
+    if (e.keyCode >= 65 && e.keyCode <= 90) {
+        handleKeyClick(char)
+    }
+    if (e.keyCode === 8) {
+      handleDeleteKey()
+    }
+    if (e.keyCode === 13) {
+      handleFormSubmit(e) 
+    }
+  }
+
 
   {/*useEffect(() => {
     // works fine can be added later
@@ -42,21 +61,6 @@ function App() {
     setIndex(populatedWords)
   }, [words])*/}
 
-
-
-  {/*function handleInputChange(e: any) {
-    const regex: RegExp = /^[a-zA-Z]+$/
-    const inputValue = e.target.value
-
-    if (userForm.length === 5 && inputValue.length < userForm.length) {
-      setUserForm(inputValue)
-    }
-
-    if ((regex.test(inputValue) || inputValue === '') && userForm.length < 5 ) {
-      setUserForm(inputValue)
-    } 
-  }*/}
-
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -65,74 +69,63 @@ function App() {
     })
   )
 
-  function isFull(array: string[]) {
-    for (let i = 0; i < array.length; i++) {
-      if (array[i] === '')
-        return false
-    }
-    return true
-  }
-
   function handleKeyClick(letter: string) {
-    for (let i = 0; i < parentKeys.length; i++) {
-      if (parentKeys[i] === '') {
-        setParentKeys(word => {
-          let updatedWord = [...word]
-          updatedWord[i] = letter
-          return updatedWord
-        })
-        break
-      }
-    }
-  }
-
-  async function handleFormSubmit(e: React.ChangeEvent) {
-    e.preventDefault()
-
-    localStorage.setItem('lastPlayDate', new Date().toLocaleDateString())
-
-
-    if (index < 6) {
-      if (userForm.length === 5 || isFull(parentKeys)) {
-
-        let word = parentKeys.join("").toLowerCase()
-        let choppedWord = word.split('')
-        console.log(word)
-        console.log(choppedWord)
-
-
-        try {
-          const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
-          const data = await response.json()
-          if (data[0].word) {
-            setWords((prevWords) => [
-              ...prevWords.slice(0, index),
-              choppedWord,
-              ...prevWords.slice(index + 1),
-            ])
-            setIndex(prev => prev + 1)
-            setParentKeys(['', '', '', '', ''])
-            setUserForm('')
-          }
-        } catch (e) {
-          console.log('Error: ', e)
+    setParentKeys(word => {
+      if (word[4] !== '')
+        return word
+      for (let i = 0; i < 5; i++) {
+        if (word[i] === '') {
+          const cpy = [...word]
+          cpy[i] = letter
+          return cpy
         }
       }
-    }
+      return word
+    })
+  }
+
+  async function handleFormSubmit(e: any) {
+    if (e)
+      e.preventDefault()
+
+    localStorage.setItem('lastPlayDate', new Date().toLocaleDateString())
+    
+    if (index < 6 && parentKeys[4] !== '') {
+      let word = parentKeys.join("").toLowerCase()
+      let choppedWord = word.split('')
+
+
+      try {
+        const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
+        const data = await response.json()
+        if (data[0].word) {
+          setWords((prevWords) => [
+            ...prevWords.slice(0, index),
+            choppedWord,
+            ...prevWords.slice(index + 1),
+          ])
+          setIndex(prev => prev + 1)
+          setParentKeys(['', '', '', '', ''])
+        }
+      } catch (e) {
+        console.log('Error: ', e)
+      }
+      }
   }
 
   function handleDeleteKey() {
-    console.log('clicked')
-    for (let i = 4; i >= 0; i--) {
-      if (parentKeys[i] !== '') {
-        setParentKeys(word => {
-          let updated = [...word]
-          updated[i] = ''
-          return updated
-        })
-        return
+    setParentKeys(word => {
+      if (word[0] === '')
+        return word
+      for (let i = 4; i >= 0; i--) {
+        if (word[i] !== '') {
+          const cpy = [...word]
+          cpy[i] = ''
+          return cpy
+        }
       }
-    }
+      return word
+    })
   }
 
   function handleDragEnd({active, over}: {active: any, over: any}) {
