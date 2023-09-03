@@ -28,7 +28,7 @@ export default function WordMatrix({ darkTheme, word, answer, setCompleted, drop
 
 
         const backgroundColorClass = 
-        `flex justify-center items-center text-4xl lg:text-5xl font-normal p-0 w-12 h-12 md:w-14 md:h-14 xl:w-[60px] xl:h-[60px] ${darkTheme ? 'text-white' : 'border shadow'}  
+        `flex justify-center items-center text-4xl lg:text-5xl font-semibold p-0 w-12 h-12 md:w-14 md:h-14 xl:w-[60px] xl:h-[60px] ${darkTheme ? 'text-white' : 'border shadow'}  
         ${letter == answer[index] ? 'bg-green-600 ' : ''}
         ${isCorrectLetterWrongPosition ? 'bg-yellow-500 ' : ''}
         ${isWrongLetter && darkTheme ? 'bg-[#303030]' : 

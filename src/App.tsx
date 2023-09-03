@@ -141,7 +141,7 @@ function App() {
   }
 
   return (
-    <div className={`${darkTheme ? 'bg-[#171717]' : ''} h-full w-full min-h-screen`}>
+    <div className={`${darkTheme ? 'bg-[#171717]' : ''} h-full w-full min-h-screen font-lora`}>
       <Header darkTheme={darkTheme} setDarkTheme={setDarkTheme}/>
       <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
       <WordMapper darkTheme={darkTheme} words={words} answer={correctWord} setCompleted={setCompleted} curRow={index} parentKeys={parentKeys} />
