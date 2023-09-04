@@ -26,25 +26,27 @@ export default function Keyboard({darkTheme, answer, words, onFormSubmit, onKeyC
     answer = answer.toUpperCase()
 
     function getKeyColor(letter: string) {
-        let color = 'white'
-      
-        for (const word of words) {
-          for (let i = 0; i < word.length; i++) {
-            if (letter === word[i].toUpperCase()) {
-              if (letter === answer[i]) {
-                color = 'green'
-              } else if (answer?.includes(letter)) {
-                color = 'yellow'
-              } else {
-                color = 'slate'
-              }
-              break
+      let color = 'white'
+    
+      for (const word of words) {
+        for (let i = 0; i < word.length; i++) {
+          if (letter === word[i].toUpperCase()) {
+            if (letter === '')
+              return
+            if (letter === answer[i]) {
+              color = 'green'
+            } else if (answer?.includes(letter)) {
+              color = 'yellow'
+            } else {
+              color = 'slate'
             }
+            break
           }
         }
-      
-        return color
       }
+    
+      return color
+    }
 
     return (
         <div className="flex justify-center mt-[6vh] md:mt-[8vh] font-bold">
@@ -59,8 +61,8 @@ export default function Keyboard({darkTheme, answer, words, onFormSubmit, onKeyC
   onClick={() => onKeyClick(letter)}
   classes={`flex justify-center items-center md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded md:rounded-md p-0 w-[8.5vw] h-[11vw] md:w-12 md:h-[60px] hover:cursor-pointer select-none touch-none ${
     color === 'green' ? 'bg-green-600' :
-    color === 'yellow' ? 'bg-yellow-400' :
-    color === 'slate' ? 'bg-gray-300' : 'bg-white'}`}
+    color === 'yellow' ? 'bg-yellow-500' :
+    color === 'slate' ? 'bg-gray-300' : 'bg-[#ededed]'}`}
 >
   {letter.toUpperCase()}
 </Draggable>
@@ -80,7 +82,7 @@ export default function Keyboard({darkTheme, answer, words, onFormSubmit, onKeyC
       classes={`flex justify-center items-center md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded md:rounded-md p-0 w-[8.5vw] h-[11vw] md:w-12 md:h-[60px] hover:cursor-pointer select-none touch-none ${
         color === 'green' ? 'bg-green-600' :
         color === 'yellow' ? 'bg-yellow-400' :
-        color === 'slate' ? 'bg-gray-300' : 'bg-white'}`}
+        color === 'slate' ? 'bg-gray-300' : 'bg-[#ededed]'}`}
     >
       {letter.toUpperCase()}
     </Draggable>
@@ -92,7 +94,7 @@ export default function Keyboard({darkTheme, answer, words, onFormSubmit, onKeyC
             <div className="flex justify-center gap-[5px] md:gap-2">
               <div 
               onClick={onFormSubmit}
-              className={`flex justify-center items-center font-medium text-sm ${darkTheme ? '' : 'border-2  border-gray-300'}rounded md:rounded-md p-0 w-[12vw] h-[11vw] md:w-[68px] md:h-[60px] hover:cursor-pointer select-none bg-white`}>
+              className={`flex justify-center items-center font-medium text-sm ${darkTheme ? '' : 'border-2  border-gray-300'}rounded md:rounded-md p-0 w-[12vw] h-[11vw] md:w-[68px] md:h-[60px] hover:cursor-pointer select-none bg-[#ededed]`}>
               ENTER
               </div>
             {thirdRow.map((letter, index) => {
@@ -105,7 +107,7 @@ export default function Keyboard({darkTheme, answer, words, onFormSubmit, onKeyC
       classes={`flex justify-center items-center md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded md:rounded-md p-0 w-[8.5vw] h-[11vw] md:w-12 md:h-[60px] hover:cursor-pointer select-none touch-none ${
         color === 'green' ? 'bg-green-600' :
         color === 'yellow' ? 'bg-yellow-400' :
-        color === 'slate' ? 'bg-gray-300' : 'bg-white'}`}
+        color === 'slate' ? 'bg-gray-300' : 'bg-[#ededed]'}`}
     >
       {letter.toUpperCase()}
     </Draggable>
@@ -114,7 +116,7 @@ export default function Keyboard({darkTheme, answer, words, onFormSubmit, onKeyC
 
   <div 
   onClick={() => onDeleteKey()}
-  className={`flex justify-center items-center text-lg md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded md:rounded-md p-0 w-[12vw] h-[11vw] md:w-[68px] md:h-[60px] hover:cursor-pointer select-none bg-white`}>
+  className={`flex justify-center items-center text-lg md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded md:rounded-md p-0 w-[12vw] h-[11vw] md:w-[68px] md:h-[60px] hover:cursor-pointer select-none bg-[#ededed]`}>
               ⌫
               </div>
             </div>
