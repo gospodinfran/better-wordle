@@ -19,6 +19,19 @@ function App() {
 
   const correctWord = 'ghost'
   
+  const handleKeyPress = ((e: any) => {
+    const char = String.fromCharCode(e.keyCode).toLowerCase()
+    if (e.keyCode >= 65 && e.keyCode <= 90) {
+        handleKeyClick(char)
+    }
+    if (e.keyCode === 8) {
+      handleDeleteKey()
+    }
+    if (e.keyCode === 13) {
+      handleFormSubmit(e) 
+    }
+  })
+
   useEffect(() => {
     if (localStorage.getItem('lastPlayDate') !== new Date().toLocaleDateString()) {
       setWords([['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], 
@@ -30,21 +43,8 @@ function App() {
     return () => window.removeEventListener('keydown', handleKeyPress)
     // const corrWord = wordData[Math.floor(Math.random() * wordData.length)]
     // setCorrectWord(corrWord)
-  }, [])
+  }, [parentKeys])
 
-
-  function handleKeyPress(e: any) {
-    const char = String.fromCharCode(e.keyCode).toLowerCase()
-    if (e.keyCode >= 65 && e.keyCode <= 90) {
-        handleKeyClick(char)
-    }
-    if (e.keyCode === 8) {
-      handleDeleteKey()
-    }
-    if (e.keyCode === 13) {
-      handleFormSubmit(e) 
-    }
-  }
 
 
   {/*useEffect(() => {
@@ -77,6 +77,7 @@ function App() {
         if (word[i] === '') {
           const cpy = [...word]
           cpy[i] = letter
+          console.log(cpy)
           return cpy
         }
       }
@@ -99,13 +100,18 @@ function App() {
         const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
         const data = await response.json()
         if (data[0].word) {
-          setWords((prevWords) => [
-            ...prevWords.slice(0, index),
-            choppedWord,
-            ...prevWords.slice(index + 1),
-          ])
+          setWords((prevWords) => {
+            const prev = [
+              ...prevWords.slice(0, index),
+              choppedWord,
+              ...prevWords.slice(index + 1)
+            ]
+            return prev
+          })
           setIndex(prev => prev + 1)
           setParentKeys(['', '', '', '', ''])
+        } else {
+          // shake the letters to say, 'not a valid word'
         }
       } catch (e) {
         console.log('Error: ', e)
