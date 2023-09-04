@@ -5,6 +5,7 @@ import LostMenu from "./components/LostMenu";
 import VictoryMenu from "./components/VictoryMenu";
 import WordMapper from "./components/WordMapper";
 import { DndContext, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
+import toast, { Toaster } from "react-hot-toast";
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
    [['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], 
   ['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', '']])
   const [parentKeys, setParentKeys] = useState<string[]>(['', '', '', '', ''])
+  const [shake, setShake] = useState(false)
   const [index, setIndex] = useState(0)
   const [completed, setCompleted] = useState(false)
 
@@ -45,7 +47,15 @@ function App() {
     // setCorrectWord(corrWord)
   }, [parentKeys])
 
+  const handleShake = function() {
+    setShake(true)
 
+    const timerId = setTimeout(() => {
+      setShake(false)
+    }, 1000)
+
+    return () => clearTimeout(timerId)
+  }
 
   {/*useEffect(() => {
     // works fine can be added later
@@ -77,7 +87,6 @@ function App() {
         if (word[i] === '') {
           const cpy = [...word]
           cpy[i] = letter
-          console.log(cpy)
           return cpy
         }
       }
@@ -111,11 +120,20 @@ function App() {
           setIndex(prev => prev + 1)
           setParentKeys(['', '', '', '', ''])
         } else {
-          // shake the letters to say, 'not a valid word'
         }
       } catch (e) {
-        console.log('Error: ', e)
+        if (e instanceof TypeError) {
+          toast.dismiss()
+          toast('Not in word list.')
+          handleShake()
+        } else {
+          console.log('Error: ', e)
+        }
       }
+      } else {
+        toast.dismiss()
+        toast('Not enough letters')
+        handleShake()
       }
   }
 
@@ -146,25 +164,18 @@ function App() {
     }
   }
 
-  return (
+  return (<>
+    <Toaster />
     <div className={`${darkTheme ? 'bg-[#171717]' : ''} h-full w-full min-h-screen font-lora`}>
       <Header darkTheme={darkTheme} setDarkTheme={setDarkTheme}/>
       <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
-      <WordMapper darkTheme={darkTheme} words={words} answer={correctWord} setCompleted={setCompleted} curRow={index} parentKeys={parentKeys} />
+      <WordMapper darkTheme={darkTheme} words={words} answer={correctWord} setCompleted={setCompleted} curRow={index} parentKeys={parentKeys} shake={shake} />
       <VictoryMenu completed={completed} />
       <LostMenu show={index == 6 && !completed} word={correctWord} />
       <Keyboard darkTheme={darkTheme} answer={correctWord} words={words} onFormSubmit={handleFormSubmit} onKeyClick={handleKeyClick} onDeleteKey={handleDeleteKey} />
       </DndContext>
-      <h2 className="text-white">Debug only</h2>
-      <button onClick={() => setIndex(prev => prev + 1)}
-       className="bg-white p-1">Go to next row</button>
-       <button onClick={() => setWords([['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], 
-  ['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', '']])}
-  className="bg-white p-1">
-        Reset game
-       </button>
     </div>
-  )
+    </>)
 }
 
 export default App
