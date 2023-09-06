@@ -6,20 +6,29 @@ import VictoryMenu from "./components/VictoryMenu";
 import WordMapper from "./components/WordMapper";
 import { Active, DndContext, Over, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
 import toast, { Toaster } from "react-hot-toast";
+import { wordData } from "./wordData";
 
 
 function App() {
   const [darkTheme, setDarkTheme] = useState(true)
-  // const [correctWord, setCorrectWord] = useState('')
+  const [correctWord, setCorrectWord] = useState('')
   const [words, setWords] = useState<string[][]>(() => 
-   [['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], 
+  localStorage.getItem('words') ? JSON.parse(localStorage.getItem('words')!) : [['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], 
   ['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', '']])
   const [parentKeys, setParentKeys] = useState<string[]>(['', '', '', '', ''])
   const [shake, setShake] = useState(false)
   const [index, setIndex] = useState(0)
   const [completed, setCompleted] = useState(false)
 
-  const correctWord = 'ghost'
+  useEffect(() => {
+    const msPerDay = 1000 * 60 * 60 * 24
+    const now = new Date()
+    const startOfDay = new Date(now.getFullYear(), 0, 0)
+    const elapsed = Number(now) - Number(startOfDay)
+
+    const index = Math.floor(elapsed / msPerDay)
+    setCorrectWord(wordData[index])
+  }, [])
   
   const handleKeyPress = ((e: KeyboardEvent) => {
     const char = e.key
@@ -44,8 +53,6 @@ function App() {
     window.addEventListener('keydown', handleKeyPress)
 
     return () => window.removeEventListener('keydown', handleKeyPress)
-    // const corrWord = wordData[Math.floor(Math.random() * wordData.length)]
-    // setCorrectWord(corrWord)
   }, [parentKeys])
 
   const handleShake = function() {
@@ -58,8 +65,7 @@ function App() {
     return () => clearTimeout(timerId)
   }
 
-  {/*useEffect(() => {
-    // works fine can be added later
+  useEffect(() => {
     localStorage.setItem('words', JSON.stringify(words))
 
     let populatedWords = 0
@@ -70,7 +76,7 @@ function App() {
       populatedWords++
     }
     setIndex(populatedWords)
-  }, [words])*/}
+  }, [words])
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -102,7 +108,7 @@ function App() {
     localStorage.setItem('lastPlayDate', new Date().toLocaleDateString())
     
     if (index < 6 && parentKeys[4] !== '') {
-      let word = parentKeys.join("").toLowerCase()
+      let word = parentKeys.join("").toUpperCase()
       let choppedWord = word.split('')
 
 
@@ -123,7 +129,18 @@ function App() {
         } else {
         }
       } catch (e) {
-        if (e instanceof TypeError) {
+        if (new Set(wordData).has(word)) {
+          setWords((prevWords) => {
+            const prev = [
+              ...prevWords.slice(0, index),
+              choppedWord,
+              ...prevWords.slice(index + 1)
+            ]
+            return prev
+          })
+          setIndex(prev => prev + 1)
+          setParentKeys(['', '', '', '', ''])
+        } else if (e instanceof TypeError) {
           toast.dismiss()
           toast('Not in word list.')
           handleShake()
