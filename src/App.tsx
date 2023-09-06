@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 import Header from "./components/Header";
 import Keyboard from "./components/Keyboard";
 import LostMenu from "./components/LostMenu";
 import VictoryMenu from "./components/VictoryMenu";
 import WordMapper from "./components/WordMapper";
-import { DndContext, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
+import { Active, DndContext, Over, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
 import toast, { Toaster } from "react-hot-toast";
 
 
@@ -21,16 +21,17 @@ function App() {
 
   const correctWord = 'ghost'
   
-  const handleKeyPress = ((e: any) => {
-    const char = String.fromCharCode(e.keyCode).toLowerCase()
-    if (e.keyCode >= 65 && e.keyCode <= 90) {
+  const handleKeyPress = ((e: KeyboardEvent) => {
+    const char = e.key
+    console.log(e.key)
+    if (char >= 'a' && char <= 'z') {
         handleKeyClick(char)
     }
-    if (e.keyCode === 8) {
+    if (char === 'Backspace') {
       handleDeleteKey()
     }
-    if (e.keyCode === 13) {
-      handleFormSubmit(e) 
+    if (char === 'Enter') {
+      handleFormSubmit()
     }
   })
 
@@ -94,9 +95,9 @@ function App() {
     })
   }
 
-  async function handleFormSubmit(e: any) {
+  async function handleFormSubmit(e?: React.FormEvent<HTMLFormElement> | MouseEventHandler<HTMLDivElement>) {
     if (e)
-      e.preventDefault()
+      (e as React.FormEvent & { preventDefault(): void }).preventDefault();
 
     localStorage.setItem('lastPlayDate', new Date().toLocaleDateString())
     
@@ -152,11 +153,11 @@ function App() {
     })
   }
 
-  function handleDragEnd({active, over}: {active: any, over: any}) {
+  function handleDragEnd({active, over}: {active: Active, over: Over}) {
     if (over) {
       setParentKeys(word => {
-        const key = active.id.toLowerCase()
-        const wordIndex = over.id
+        const key = String(active.id).toLowerCase() 
+        const wordIndex = Number(over.id)
         let updated = [...word]
         updated[wordIndex] = key
         return updated

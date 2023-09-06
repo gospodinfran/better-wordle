@@ -1,6 +1,7 @@
 import { Menu } from "@headlessui/react"
+import { ReactNode } from "react"
 
-export default function LeftMenu({ children }: { children: any }) {
+export default function LeftMenu({ children }: { children: ReactNode }) {
 
     return (
     <Menu>

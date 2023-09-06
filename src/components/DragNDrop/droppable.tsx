@@ -1,7 +1,8 @@
 import {useDroppable} from '@dnd-kit/core';
+import { ReactNode } from 'react';
 
 interface componentProps {
-  children: any;
+  children: ReactNode;
   id: string;
   classes: string;
 }

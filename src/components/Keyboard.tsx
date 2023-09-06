@@ -4,7 +4,7 @@ interface Props {
   darkTheme: boolean;
   answer: string;
   words: string[][];
-  onFormSubmit: any;
+  onFormSubmit: (e?: any) => Promise<void>;
   onKeyClick: (letter: string) => void;
   onDeleteKey: () => void;
 }

@@ -1,7 +1,8 @@
 import { Menu } from '@headlessui/react'
+import { ReactNode } from 'react'
 
 
-export default function BasicSettings({ children, setTheme }: { children: any, setTheme: React.Dispatch<React.SetStateAction<boolean>>}) {
+export default function BasicSettings({ children, setTheme }: { children: ReactNode, setTheme: React.Dispatch<React.SetStateAction<boolean>>}) {
 
   return (
     <Menu>
