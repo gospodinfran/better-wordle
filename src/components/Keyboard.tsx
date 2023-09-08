@@ -62,7 +62,7 @@ export default function Keyboard({darkTheme, answer, words, onFormSubmit, onKeyC
   classes={`flex justify-center items-center md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded md:rounded-md p-0 w-[8.5vw] h-[11vw] md:w-12 md:h-[60px] hover:cursor-pointer select-none touch-none ${
     color === 'green' ? 'bg-green-600' :
     color === 'yellow' ? 'bg-yellow-500' :
-    color === 'slate' ? 'bg-gray-300' : 'bg-[#ededed]'}`}
+    color === 'slate' ? 'bg-[#3e3d3d]' : 'bg-[#ededed]'}`}
 >
   {letter.toUpperCase()}
 </Draggable>
@@ -82,7 +82,7 @@ export default function Keyboard({darkTheme, answer, words, onFormSubmit, onKeyC
       classes={`flex justify-center items-center md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded md:rounded-md p-0 w-[8.5vw] h-[11vw] md:w-12 md:h-[60px] hover:cursor-pointer select-none touch-none ${
         color === 'green' ? 'bg-green-600' :
         color === 'yellow' ? 'bg-yellow-400' :
-        color === 'slate' ? 'bg-gray-300' : 'bg-[#ededed]'}`}
+        color === 'slate' ? 'bg-[#3e3d3d]' : 'bg-[#ededed]'}`}
     >
       {letter.toUpperCase()}
     </Draggable>
@@ -107,7 +107,7 @@ export default function Keyboard({darkTheme, answer, words, onFormSubmit, onKeyC
       classes={`flex justify-center items-center md:text-xl ${darkTheme ? '' : 'border-2  border-gray-300'} rounded md:rounded-md p-0 w-[8.5vw] h-[11vw] md:w-12 md:h-[60px] hover:cursor-pointer select-none touch-none ${
         color === 'green' ? 'bg-green-600' :
         color === 'yellow' ? 'bg-yellow-400' :
-        color === 'slate' ? 'bg-gray-300' : 'bg-[#ededed]'}`}
+        color === 'slate' ? 'bg-[#3e3d3d]' : 'bg-[#ededed]'}`}
     >
       {letter.toUpperCase()}
     </Draggable>
