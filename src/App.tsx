@@ -7,32 +7,28 @@ import WordMapper from "./components/WordMapper";
 import { Active, DndContext, Over, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
 import toast, { Toaster } from "react-hot-toast";
 import { wordData } from "./wordData";
+import useLocalStorage from "./hooks/useLocalState";
 
 
 function App() {
   const [darkTheme, setDarkTheme] = useState(true)
+  const [index, setIndex] = useState(0)
   const [correctWord, setCorrectWord] = useState('')
-  const [words, setWords] = useState<string[][]>(() => 
-  localStorage.getItem('words') ? JSON.parse(localStorage.getItem('words')!) : [['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', ''], 
-  ['', '', '', '', ''], ['', '', '', '', ''], ['', '', '', '', '']])
+  const [words, setWords] = useLocalStorage(setIndex)
   const [parentKeys, setParentKeys] = useState<string[]>(['', '', '', '', ''])
   const [shake, setShake] = useState(false)
-  const [index, setIndex] = useState(0)
   const [completed, setCompleted] = useState(false)
 
   useEffect(() => {
+    // temporarily using this hack due to heroku billing
     const msPerDay = 1000 * 60 * 60 * 24
     const now = new Date()
-    const startOfDay = new Date(now.getFullYear(), 0, 0)
-    const elapsed = Number(now) - Number(startOfDay)
-
-    const index = Math.floor(elapsed / msPerDay)
+    const index = Math.floor((now.getTime() / msPerDay)) % wordData.length
     setCorrectWord(wordData[index])
   }, [])
   
   const handleKeyPress = ((e: KeyboardEvent) => {
     const char = e.key
-    console.log(e.key)
     if (char >= 'a' && char <= 'z') {
         handleKeyClick(char)
     }
@@ -65,18 +61,6 @@ function App() {
     return () => clearTimeout(timerId)
   }
 
-  useEffect(() => {
-    localStorage.setItem('words', JSON.stringify(words))
-
-    let populatedWords = 0
-    for (let i = 0; i < 6; i++) {
-      if (words[i][0] == '') {
-        break
-      }
-      populatedWords++
-    }
-    setIndex(populatedWords)
-  }, [words])
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
