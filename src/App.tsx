@@ -20,7 +20,7 @@ function App() {
   const [completed, setCompleted] = useState(false)
 
   useEffect(() => {
-    // temporarily using this hack due to heroku billing
+    // temporarily using this hack instead of api call due to heroku billing
     const msPerDay = 1000 * 60 * 60 * 24
     const now = new Date()
     const index = Math.floor((now.getTime() / msPerDay)) % wordData.length
