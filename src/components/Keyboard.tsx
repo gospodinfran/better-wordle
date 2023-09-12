@@ -10,7 +10,6 @@ interface Props {
 }
 
 export default function Keyboard({darkTheme, answer, words, onFormSubmit, onKeyClick, onDeleteKey}: Props) {
-    // First row of the QWERTY keyboard
     const firstRow: string[] = [
         "q", "w", "e", "r", "t", "y", "u", "i", "o", "p"
     ]

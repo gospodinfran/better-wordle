@@ -1,3 +1,5 @@
+import { Active, DndContext, Over } from "@dnd-kit/core";
+import Draggable from "./DragNDrop/draggable";
 import Droppable from "./DragNDrop/droppable";
 
 interface WordMatrixProps {
@@ -6,11 +8,12 @@ interface WordMatrixProps {
   answer: string;
   setCompleted: React.Dispatch<React.SetStateAction<boolean>>;
   droppable: boolean;
-  parentKeys: string[];
+  guessForm: string[];
+  setGuessForm: React.Dispatch<React.SetStateAction<string[]>>
   shake: boolean;
 }
 
-export default function WordMatrix({ darkTheme, word, answer, setCompleted, droppable, parentKeys, shake }: WordMatrixProps) {
+export default function WordMatrix({ darkTheme, word, answer, setCompleted, droppable, guessForm, setGuessForm, shake }: WordMatrixProps) {
   let score = 0
 
   return (
@@ -20,7 +23,7 @@ export default function WordMatrix({ darkTheme, word, answer, setCompleted, drop
         answer = answer.toLowerCase()
         letter == answer[index] ? score += 1 : ''
         score === 5 ? setCompleted(true) : ''
-        const parentLetter = parentKeys[index]
+        const parentLetter = guessForm[index]
 
         const isCorrectLetterAndPosition = letter == answer[index]
         const isCorrectLetterWrongPosition =
@@ -40,6 +43,16 @@ export default function WordMatrix({ darkTheme, word, answer, setCompleted, drop
           (letter === '' || !letter) && !darkTheme ? 'bg-slate-50' : ''
         }`
 
+        const handleDragEnd = ({active, over}: {active: Active, over: Over}) => {
+          console.log(`over: ${over}\nactive: ${JSON.stringify(active)}`)
+          setGuessForm(word => {
+            let cpy = [...word]
+            active.id = Number(active.id)
+            cpy[active.id] = ''
+            return cpy
+          })
+        }
+
         if (droppable) {
           return (
             <Droppable
@@ -48,9 +61,14 @@ export default function WordMatrix({ darkTheme, word, answer, setCompleted, drop
               classes={`flex justify-center items-center text-4xl lg:text-5xl font-normal p-0 w-12 h-12 md:w-14 md:h-14 xl:w-[60px] xl:h-[60px] ${darkTheme ? '' : 'bg-slate-50 border-2 border-gray-300'} hover:cursor-pointer select-none touch-none  ${shake ? 'animate-shake' : ''}
               ${parentLetter === '' ? 'bg-[#303030]' : 'bg-white'}`}
             >
-              {/*If droppable, won't have letter. Only parent.*/}
-              { parentLetter !== '' ? parentLetter.toUpperCase()
+                { parentLetter !== '' ? 
+                <DndContext onDragEnd={handleDragEnd}>
+                  <Draggable id={`${letter}${index}`} >
+                    {parentLetter.toUpperCase()}
+                  </Draggable>
+                </DndContext>
               : ''}
+              
             </Droppable>
           )
         } else {

@@ -15,7 +15,7 @@ function App() {
   const [index, setIndex] = useState(0)
   const [correctWord, setCorrectWord] = useState('')
   const [words, setWords] = useLocalStorage(setIndex, true)
-  const [parentKeys, setParentKeys] = useState<string[]>(['', '', '', '', ''])
+  const [guessForm, setGuessForm] = useState<string[]>(['', '', '', '', ''])
   const [shake, setShake] = useState(false)
   const [completed, setCompleted] = useState(false)
 
@@ -49,7 +49,7 @@ function App() {
     window.addEventListener('keydown', handleKeyPress)
 
     return () => window.removeEventListener('keydown', handleKeyPress)
-  }, [parentKeys])
+  }, [guessForm])
 
   const handleShake = function() {
     setShake(true)
@@ -71,7 +71,7 @@ function App() {
   )
 
   function handleKeyClick(letter: string) {
-    setParentKeys(word => {
+    setGuessForm(word => {
       if (word[4] !== '')
         return word
       for (let i = 0; i < 5; i++) {
@@ -91,8 +91,8 @@ function App() {
 
     localStorage.setItem('lastPlayDate', new Date().toLocaleDateString())
     
-    if (index < 6 && parentKeys[4] !== '') {
-      let word = parentKeys.join("").toUpperCase()
+    if (index < 6 && guessForm[4] !== '') {
+      let word = guessForm.join("").toUpperCase()
       let choppedWord = word.split('')
 
 
@@ -109,7 +109,7 @@ function App() {
             return prev
           })
           setIndex(prev => prev + 1)
-          setParentKeys(['', '', '', '', ''])
+          setGuessForm(['', '', '', '', ''])
         } else {
         }
       } catch (e) {
@@ -123,7 +123,7 @@ function App() {
             return prev
           })
           setIndex(prev => prev + 1)
-          setParentKeys(['', '', '', '', ''])
+          setGuessForm(['', '', '', '', ''])
         } else if (e instanceof TypeError) {
           toast.dismiss()
           toast('Not in word list.')
@@ -140,7 +140,7 @@ function App() {
   }
 
   function handleDeleteKey() {
-    setParentKeys(word => {
+    setGuessForm(word => {
       if (word[0] === '')
         return word
       for (let i = 4; i >= 0; i--) {
@@ -156,7 +156,7 @@ function App() {
 
   function handleDragEnd({active, over}: {active: Active, over: Over}) {
     if (over) {
-      setParentKeys(word => {
+      setGuessForm(word => {
         const key = String(active.id).toLowerCase() 
         const wordIndex = Number(over.id)
         let updated = [...word]
@@ -168,10 +168,10 @@ function App() {
 
   return (<>
     <Toaster />
-    <div className={`${darkTheme ? 'bg-[#121213]' : ''} h-full w-full min-h-screen font-lora`}>
+    <div className={`${darkTheme ? 'bg-[#121213]' : ''} h-full w-full min-h-screen font-lora select-none`}>
       <Header darkTheme={darkTheme} setDarkTheme={setDarkTheme}/>
       <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
-      <WordMapper darkTheme={darkTheme} words={words} answer={correctWord} setCompleted={setCompleted} curRow={index} parentKeys={parentKeys} shake={shake} />
+      <WordMapper darkTheme={darkTheme} words={words} answer={correctWord} setCompleted={setCompleted} curRow={index} guessForm={guessForm} setGuessForm={setGuessForm} shake={shake} />
       <VictoryMenu completed={completed} />
       <LostMenu show={index == 6 && !completed} word={correctWord} />
       <Keyboard darkTheme={darkTheme} answer={correctWord} words={words} onFormSubmit={handleFormSubmit} onKeyClick={handleKeyClick} onDeleteKey={handleDeleteKey} />
