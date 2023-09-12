@@ -10,7 +10,7 @@ export default function useLocalStorage(setIndex: React.Dispatch<React.SetStateA
     localStorage.setItem('words', JSON.stringify(words))
 
     let populatedWords = 0
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 6; i++) {
       if (words[i][0] == '') {
         break
       }
