@@ -14,7 +14,7 @@ function App() {
   const [darkTheme, setDarkTheme] = useState(true)
   const [index, setIndex] = useState(0)
   const [correctWord, setCorrectWord] = useState('')
-  const [words, setWords] = useLocalStorage(setIndex)
+  const [words, setWords] = useLocalStorage(setIndex, true)
   const [parentKeys, setParentKeys] = useState<string[]>(['', '', '', '', ''])
   const [shake, setShake] = useState(false)
   const [completed, setCompleted] = useState(false)

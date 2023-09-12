@@ -6,7 +6,7 @@ export default function LeftMenu({ children }: { children: ReactNode }) {
     return (
     <Menu>
         <Menu.Button>{children}</Menu.Button>
-        <Menu.Items className="absolute left-0 mt-44 w-44 ml-[27px] origin-top-left divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="absolute left-0 mt-44 w-44 ml-[27px] origin-top-left divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
             <div className='px-1 py-1'>
                 <Menu.Item onClick={() => window.open('http://github.com/gospodinfran', '_blank')}>
             {({ active }) => (
